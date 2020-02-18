@@ -103,7 +103,7 @@ $(document).ready(function(){
 
 		
 		var login={"username":$("#email").val(),"password":$("#password").val()};
-		alert(login);
+		//alert(login);
 		  $.ajax({
 		      type: "GET",
 		      contentType : 'application/json; charset=utf-8',
@@ -116,15 +116,30 @@ $(document).ready(function(){
 		      success :function(result) {
 		            
 		    	  console.log(result);
+		    	  
+		    	  sessionStorage.setItem("empId",result.username); 
+		    	  sessionStorage.setItem("role",result.role); 
+		    	  
 		    	if(result!=null){
 		    		alert("Login done");
-		    		window.location.href = '/dashboard'; 
+		    		
+		    		if(result.role=="admin"){
+		    			window.location.href = '/employeeDetails'; 
+		    		}
+		    		if(result.role=="employee"){
+		    			window.location.href = '/employeeMeetingStatus'; 
+		    		}
+		    		if(result.role=="manager"){
+		    			window.location.href = '/meetingStatus'; 
+		    		}
+		    		
 		    	}else{
 		    		alert("username or password worng");
 		    	}
 		     },
 	       error: function(e){          	   
-	    	  console.log(e)
+	    	  console.log(e);
+	    		alert("username or password worng");
 	    	   
 	    	  }
 		  });

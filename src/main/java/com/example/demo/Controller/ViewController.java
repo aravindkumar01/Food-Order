@@ -1,65 +1,41 @@
 package com.example.demo.Controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class ViewController {
 
 	
-	@RequestMapping("/")
-	public String loginMessage(){
-		return "login";
-	}
-	
-	@RequestMapping("/employeeDetails")
-	public String employeeDetails(){
-		return "employeeDetails";
-	}
-	@RequestMapping("/addEmployee")
-	public String addEmployee(){
-		return "addemployee";
-	}
-	
 	@RequestMapping("/addDepartment")
-	public String addDepartment(){
+	public String addDepartment() {
+		
 		return "addDepartment";
 	}
 	
+	@GetMapping("/login/menu")
+	public  ModelAndView menu(ModelMap model,HttpSession session){
+		
 	
-	@RequestMapping("/departmentDetails")
-	public String departmentDetails(){
-		return "departmentDetails";
+		
+		try {
+		//	Login l=(Login)session.getAttribute("user");
+			
+		//System.out.println(l.getUsername()+"---------"+l.getRole());
+		//	model.addAttribute("userType",l.getRole());
+			//model.addObject("employeeObj", new EmployeeBean(123));
+			//model.addObject("msg", "Employee information.");
+			return new ModelAndView("menu");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	
-	@RequestMapping("/addMeeting")
-	public String addMeeting(){
-		return "addMeeting";
-	}
-	
-	
-	@RequestMapping("/meetingDetails")
-	public String meetingDetails(){
-		return "meetingDetails";
-	}
-	
-	@RequestMapping("/meetingStatus")
-	public String meetingStatus(){
-		return "meetingStatus";
-	}
-
-	
-
-	@RequestMapping("/employeeMeetingStatus")
-	public String employeeMeetingStatus(){
-		return "employeeMeetingStatus";
-	}
-	
-	
-	@RequestMapping("/employeeTravel")
-	public String employeeTravel(){
-		return "employeeTravel";
-	}
-
 }

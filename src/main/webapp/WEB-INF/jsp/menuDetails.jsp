@@ -68,26 +68,20 @@
 		                <thead>
 		                <tr>
 		                  <th>Id</th>
-		                  <th>Name</th>                  
+		                  <th>Title</th>                  
 		                  <th>Description</th>		                  
 						  <th>Edit</th>
 						  <th>Delete</th>
 		                </tr>
 		                </thead>
 		                <tbody id="employee-table">
-		                      <tr>
-		                      <td>sss</td>
-		                      <td>sss</td>
-		                      <td>sss</td>
-		                      <td>sss</td>
-		                      <td>sss</td>
-		                      </tr>
+		                      
 		                </tbody>
 		                 
 		                <tfoot>
 		                <tr>
 		                  <th>Id</th>
-		                  <th>Name</th>                  
+		                  <th>Title</th>                  
 		                  <th>Description</th>		                  
 						  <th>Edit</th>
 						  <th>Delete</th>
@@ -164,8 +158,38 @@ $(document).ready(function(){
     	   
     	   	        }
 	  });
+	  
+	  
+		//alert("ddd");
+	    var t = $('#example1').DataTable();
+	     //alert("dd");
+
+		  $.ajax({
+		      type: "GET",
+		      contentType : 'application/json; charset=utf-8',
+		      dataType : 'json',
+		      url: "/menu/all",
+		      //data: JSON.stringify(employee),
+		      success :function(result) {
+		            console.log(result);
+		    	  $.each(result,function( i,j ) {
+		    		  
+		    		  t.row.add( [
+		    			  j.id,j.title,j.description,'<i class="fas fa-edit" style="cursor:pointer;"></i>','<i class="fas fa-trash-alt" style="cursor:pointer;">'
+		    		  ]).draw( false );
+		    	  });
+		     },
+	       error: function(e){          	   
+	    	  console.log(e)
+	    	   
+	    	  }
+		  });
+		
 	
 });
+
+
+
 </script>
 </body>
 </html>

@@ -2,7 +2,9 @@
     pageEncoding="ISO-8859-1"%>
     <!DOCTYPE html>
 <html>
-<head>
+<head><!-- https://bootsnipp.com/snippets/WaeDX 
+			https://bootsnipp.com/snippets/X2Db0
+-->
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>AdminLTE 3 | Blank Page</title>
@@ -48,7 +50,7 @@
                 
 				  <div class="form-group">
                     <label>Title</label>
-                    <input type="text" class="form-control" placeholder="Enter name of department" id="title">
+                    <input type="text" class="form-control" placeholder="Enter name of menu" id="title">
                   </div>
                  
                   <div class="row">
@@ -164,7 +166,14 @@ $(document).ready(function(){
 });
 
 function myFunction(){
-	var menu={"title":$("#title").val(),"description":$("#description").val()};
+	
+	var title=$("#title").val();
+	var des=$("#description").val();
+	
+	if(title=="" || des=="" ) {
+		
+	}
+	var menu={"title":title,"description":des};
 	
 	//alert(department);
 	

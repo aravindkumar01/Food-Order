@@ -205,9 +205,9 @@ function alertMsg(msg){
 		 toastr.success(msg);
 }
   
- function errorToast(){
+ function errorToast(msg){
 	 
-	 toastr.error('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.');
+	 toastr.error(msg);
  }
   
   function resetForm(){

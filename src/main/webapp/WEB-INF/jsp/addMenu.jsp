@@ -176,7 +176,7 @@ function myFunction(){
 	var menu={"title":title,"description":des};
 	
 	//alert(department);
-	
+	console.log(menu);
 	  $.ajax({
 	      type: "POST",
 	      contentType : 'application/json; charset=utf-8',

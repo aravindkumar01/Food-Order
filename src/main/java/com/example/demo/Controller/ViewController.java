@@ -12,11 +12,39 @@ import org.springframework.web.servlet.ModelAndView;
 public class ViewController {
 
 	
-	@RequestMapping("/addDepartment")
-	public String addDepartment() {
+
+	
+	
+	@RequestMapping("/menuDetails")
+	public String menuDetails() {
 		
-		return "addDepartment";
+		return "menuDetails";
 	}
+
+	
+	@RequestMapping("/departmentDetails")
+	public String departmentDetails() {
+		
+		return "departmentDetails";
+	}
+	
+	
+	
+	@RequestMapping("/")
+	public String home() {
+		
+		return "menuDetails";
+	}
+	
+	
+	@RequestMapping("/addMenu")
+	public String addMenu() {
+		
+		return "addMenu";
+	}
+	
+	
+	
 	
 	@GetMapping("/login/menu")
 	public  ModelAndView menu(ModelMap model,HttpSession session){

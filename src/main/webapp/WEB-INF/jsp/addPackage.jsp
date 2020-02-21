@@ -50,7 +50,25 @@
                 
 				  <div class="form-group">
                     <label>Title</label>
-                    <input type="text" class="form-control" placeholder="Enter name of menu" id="title">
+                    <input type="text" class="form-control" placeholder="Enter name of package" id="title">
+                  </div>
+                  
+                  <div class="form-group">
+                    <label>Cost</label>
+                    <input type="text" class="form-control" placeholder="Enter  of cost" id="cost">
+                  </div>
+                  
+                   <div class="form-group">
+                    <label>Image</label>
+                    <input type="file" class="form-control" placeholder="Choose the imgae" id="img">
+                  </div>
+                  
+                  <div class="form-group">
+                    <label>Status</label>
+                    <select class="form-control" id="status">
+                        <option value="avalible">Avalible</option>
+                        <option value="unavalible">Un Avalible</option>
+                    </select>
                   </div>
                  
                   <div class="row">
@@ -169,19 +187,23 @@ function myFunction(){
 	
 	var title=$("#title").val();
 	var des=$("#description").val();
-	
-	if(title=="" || des=="" ) {
-		
+	var cost=$("#cost").val();
+	var status=$("#status").val();
+	var img=$("#img").val();
+	alert(img);
+	if(title=="" || des=="" || cost=="" || status=="") {
+		errorToast("Fill all details");
+		return fasle;
 	}
-	var menu={"title":title,"description":des};
+	var menu={"title":title,"description":des,"cost":cost,"status":status};
 	
 	//alert(department);
-	console.log(menu);
+	//console.log(menu);
 	  $.ajax({
 	      type: "POST",
 	      contentType : 'application/json; charset=utf-8',
 	      dataType : 'json',
-	      url: "/menu/add",
+	      url: "/package/add",
 	      data: JSON.stringify(menu),
 	      success :function(result) {
 	         if(result){
@@ -214,6 +236,9 @@ function alertMsg(msg){
 	  
 	  $("#title").val('');
 	  $("#description").val('');
+	  $("#cost").val('');
+	  $("#status").val('');
+	  $("#img").val('');
   }
   
 </script>

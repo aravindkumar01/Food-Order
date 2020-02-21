@@ -2,6 +2,7 @@ package com.example.demo.Controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -62,6 +64,7 @@ public class ViewController {
 				menu=pacService.getAll();
 				System.out.println(menu);
 				ModelAndView model1 = new ModelAndView("packages");
+				model1.addObject("user", "admin");				
 				model1.addObject("lists", menu);
 
 			
@@ -75,6 +78,30 @@ public class ViewController {
 		}
 		
 	}
+	
+	@GetMapping("/viewPackage/{id}")
+	public ModelAndView viewPackage(ModelMap model,HttpSession session,@PathVariable("id") long id) {
+		
+		try {
+			
+			Optional<MenuPackage> menu=pacService.getById(1);
+				System.out.println(menu);
+				ModelAndView model1 = new ModelAndView("viewPackage");
+				model1.addObject("user", "admin");				
+				model1.addObject("package", menu);
+
+			
+			//return new ModelAndView("packages");
+			return model1;
+			//return "packages";
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return null;
+		}
+		
+	}
+	
 	
 	
 	@RequestMapping("/addPackage")

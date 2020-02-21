@@ -46,26 +46,26 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-              <!--   <form role="form" onsubmit="myFunction()"> -->
+                 <form role="form" action="/package/add" enctype="multipart/form-data"  method="post"> 
                 
 				  <div class="form-group">
                     <label>Title</label>
-                    <input type="text" class="form-control" placeholder="Enter name of package" id="title">
+                    <input type="text" class="form-control" name="title" placeholder="Enter name of package" id="title"  required="required">
                   </div>
                   
                   <div class="form-group">
                     <label>Cost</label>
-                    <input type="text" class="form-control" placeholder="Enter  of cost" id="cost">
+                    <input type="text" class="form-control" name="cost" placeholder="Enter  of cost" id="cost"  required="required">
                   </div>
                   
                    <div class="form-group">
                     <label>Image</label>
-                    <input type="file" class="form-control" placeholder="Choose the imgae" id="img">
+                    <input type="file" class="form-control" name="file" placeholder="Choose the imgae" id="img"  required="required">
                   </div>
                   
                   <div class="form-group">
                     <label>Status</label>
-                    <select class="form-control" id="status">
+                    <select class="form-control" id="status" name="status"  required="required">
                         <option value="avalible">Avalible</option>
                         <option value="unavalible">Un Avalible</option>
                     </select>
@@ -76,14 +76,14 @@
                       <!-- textarea -->
                       <div class="form-group">
                         <label>Description</label>
-                        <textarea class="form-control" rows="3" placeholder="Enter your Description" id="description" required="required"></textarea>
+                        <textarea class="form-control" rows="3" placeholder="Enter your Description" name="description" id="description" required="required"></textarea>
                       </div>
                     </div>                    
                   </div>
 
 				<div class="row">
 					<div class="col-md-6">
-						<button onClick="myFunction()" type="button" class="btn btn-block btn-success btn toastrDefaultSuccess" id="saveEmployee">Save</button>
+						<button type="sumbit"  class="btn btn-block btn-success btn toastrDefaultSuccess" id="saveEmployee">Save</button>
 					</div>
 					<div class="col-md-6">
 						<button type="button" class="btn btn-block btn-info btn">Cancel</button>
@@ -107,33 +107,7 @@
       </div><!-- /.container-fluid -->
     </section>
 
-    <!-- Main content -->
-    <section class="content">
-
-      <!-- Default box -->
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title">Title</h3>
-
-          <div class="card-tools">
-            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-              <i class="fas fa-minus"></i></button>
-            <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
-              <i class="fas fa-times"></i></button>
-          </div>
-        </div>
-        <div class="card-body">
-          Start creating your amazing application!
-        </div>
-        <!-- /.card-body -->
-        <div class="card-footer">
-          Footer
-        </div>
-        <!-- /.card-footer-->
-      </div>
-      <!-- /.card -->
-
-    </section>
+   
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
@@ -183,6 +157,8 @@ $(document).ready(function(){
 	
 });
 
+
+
 function myFunction(){
 	
 	var title=$("#title").val();
@@ -190,12 +166,26 @@ function myFunction(){
 	var cost=$("#cost").val();
 	var status=$("#status").val();
 	var img=$("#img").val();
-	alert(img);
+	if (img) {
+	    var startIndex = (img.indexOf('\\') >= 0 ? img.lastIndexOf('\\') : img.lastIndexOf('/'));
+	    var filename = img.substring(startIndex);
+	    if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
+	        filename = filename.substring(1);
+	    }
+	   alert(filename);
+	}
+	
+	
+	alert($("#img").val());
+	
 	if(title=="" || des=="" || cost=="" || status=="") {
 		errorToast("Fill all details");
-		return fasle;
+		return false;
 	}
-	var menu={"title":title,"description":des,"cost":cost,"status":status};
+	var menu={"title":title,"description":des,"cost":cost,"status":status,"img_path":img,
+			"img_name":filename, "file":$("#img")[0].files[0]};
+	
+	
 	
 	//alert(department);
 	//console.log(menu);
@@ -204,7 +194,8 @@ function myFunction(){
 	      contentType : 'application/json; charset=utf-8',
 	      dataType : 'json',
 	      url: "/package/add",
-	      data: JSON.stringify(menu),
+	      data:  JSON.stringify(menu),
+	      
 	      success :function(result) {
 	         if(result){
 	        	 alertMsg("Menu added!");

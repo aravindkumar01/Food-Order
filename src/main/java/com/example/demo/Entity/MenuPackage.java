@@ -36,21 +36,23 @@ public class MenuPackage {
 
 
 	@Column
-	private String img;
+	private String img_path;
 
 	
 	
 	
 	
 	
-	public String getImg() {
-		return img;
+
+	public String getImg_path() {
+		return img_path;
 	}
 
 
-	public void setImg(String img) {
-		this.img = img;
+	public void setImg_path(String img_path) {
+		this.img_path = img_path;
 	}
+
 
 
 	public String getDescription() {

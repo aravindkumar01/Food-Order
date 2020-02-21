@@ -3,7 +3,7 @@
     
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <!DOCTYPE html>
-<html>
+<html> 
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,7 +11,7 @@
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Font Awesome -->
+  <!-- Font Awesome  https://bootsnipp.com/snippets/1dPDV-->
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
@@ -49,26 +49,29 @@
     <!-- Main content -->
     <section class="content">
 
-      <!-- Default box -->
-      
- <div class="container">
+     <div class="container">
          <div class="row">
             <div class="col-lg-12 text-center my-2">
-               <h4 class="border-bottom border-dark p-2">Menu Packages&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              
+                <h4 class="border-bottom border-dark p-2">Menu Packages&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                		 <a href="/addPackage" class="btn btn-primary" >New&nbsp;&nbsp;&nbsp;<i class="fa fa-plus-circle  nav-icon"></i></a>
 		  
                </h4>
-             
             </div>
-            
          </div>
          <div class="portfolio-menu mt-2 mb-4">
+           <!--  <ul>
+               <li class="btn btn-outline-dark active" data-filter="*">All</li>
+               <li class="btn btn-outline-dark" data-filter=".gts">Girls T-shirt</li>
+               <li class="btn btn-outline-dark" data-filter=".lap">Laptops</li>
+               <li class="btn btn-outline-dark text" data-filter=".selfie">selfie</li>
+            </ul> -->
             <ul>
-              <li class="btn btn-outline-dark active" data-filter="*">All</li>
-           <c:if test="${not empty lists}">
+            <li class="btn btn-outline-dark active" data-filter="*">All</li>
+              <c:if test="${not empty lists}">
             <c:forEach items="${lists}" var="menu">
             
-            	 <li class="btn btn-outline-dark" data-filter=".${menu.title}">${menu.title}s</li>
+            	 <li class="btn btn-outline-dark" data-filter=".${menu.title}">${menu.title}</li>
               <!--  <li class="btn btn-outline-dark active" data-filter="*">All</li>
                <li class="btn btn-outline-dark" data-filter=".gts">Girls T-shirt</li>
                <li class="btn btn-outline-dark" data-filter=".lap">Laptops</li>
@@ -76,45 +79,43 @@
              </c:forEach>
              </c:if>
             </ul>
-            
          </div>
          <div class="portfolio-item row">
-         
-              <div class="col-md-3 aravinds">
-                <div class="card-content">
-                    <div class="card-img">
-                    
-                        <img src="https://www.washingtonpost.com/wp-apps/imrs.php?src=https://arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/2KL6JYQYH4I6REYMIWBYVUGXPI.jpg&w=767" alt="">
-                        <span><h4>heading</h4></span>
-                    </div>
-                    <div class="card-desc text-center">
-                        
-                        <p><b>Wedding Delight<b></b></p>
-                       <div class="" style="background-color:#a11111;height:50px;">
-                           <div class="" style="margin-top:10px;">
-                           		<p style="color:white;"><b><br>View<br><br></b></p>
-                           </div>
-                       		
-                       </div>
-                    </div>
-                    
-                </div>
-           	 </div>
+            <c:if test="${not empty lists}">
+              <c:forEach items="${lists}" var="menu">
+	              <div class="item col-md-3 ${menu.title}">
+			        	<c:if test="${user eq 'admin'}">      
+			              <p class="text-center"><i class="fa fa-trash" style="color:red;cursor: pointer;}" aria-hidden="true"></i></p>
+			         	</c:if>
+			          <div class="card-content">
+	                      <div class="card-img">  
+	                        <img src="/images/packages/${menu.title}.jpeg" alt="">
+	                        <span><h4>${menu.status}</h4></span>
+	                        
+	                    </div>
+	                   
+	                    <div class="card-desc text-center">
+		                       
+		                        <p><b>${menu.title}<b></b></p>
+		                      	 
+		                       <div class="" style="background-color:#a11111;height:50px;">
+		                           <div class="" style="margin-top:10px;">
+		                           		<a href="/viewPackage/${menu.id}" style="color:white;"><b><br>View<br><br></b></a>
+		                           		
+		                           </div>
+		                           
+		                       		
+		                       </div>
+		                </div>
+	                </div>
+	            </div>
+	            
+	          </c:forEach>
+            </c:if>
             
-            
-            <div class="item gts col-lg-3 col-md-4 col-6 col-sm">
-               <a href="https://image.freepik.com/free-photo/pretty-girl-near-car_1157-16962.jpg" class="fancylight popup-btn" data-fancybox-group="light"> 
-               <img class="img-fluid" src="https://image.freepik.com/free-photo/pretty-girl-near-car_1157-16962.jpg" alt="">
-               </a>
-            </div>
-            <div class="item lap col-lg-3 col-md-4 col-6 col-sm">
-               <a href="https://image.freepik.com/free-photo/pretty-girl-near-car_1157-16962.jpg" class="fancylight popup-btn" data-fancybox-group="light"> 
-               <img class="img-fluid" src="https://image.freepik.com/free-photo/pretty-girl-near-car_1157-16962.jpg" alt="">
-               </a>
-            </div>
-            
-            
-          </div>
+       </div>
+       
+       
       </div>
     </section>
     <!-- /.content -->

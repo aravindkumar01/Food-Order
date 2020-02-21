@@ -1,7 +1,16 @@
 package com.example.demo.Controller;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,9 +18,11 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.Entity.MenuPackage;
 import com.example.demo.Service.PackageService;
@@ -22,16 +33,47 @@ public class PackageController {
 	
 	
 	@Autowired
+	ServletContext context;
+	
+	@Autowired
 	PackageService service;
 	@PostMapping("/add")
-	public @ResponseBody boolean add(@RequestBody MenuPackage entity) {
+	public  ModelAndView add(HttpServletRequest request, HttpServletResponse response,@RequestParam("file") MultipartFile file) {
 		
 		try {
 			
-			return service.add(entity);
+			    Part filePart =request.getPart("file");
+			   
+			    String absolutePath = context.getRealPath("/images/packages/").toString();
+			
+			    	
+			    		
+			    
+			MenuPackage entity=new MenuPackage();
+						entity.setTitle(request.getParameter("title"));
+						entity.setCost(request.getParameter("cost"));
+						entity.setDescription(request.getParameter("description"));
+						entity.setStatus(request.getParameter("status"));
+		
+						 String path=absolutePath+entity.getTitle()+".jpeg";
+						entity.setImg_path(absolutePath);
+						  byte[] bytes = file.getBytes();
+
+							// Creating the directory to store file
+							File serverFile=new File(path);
+							
+							BufferedOutputStream stream = new BufferedOutputStream(
+									new FileOutputStream(serverFile));
+							stream.write(bytes);
+							stream.close();
+					        
+							
+			 service.add(entity);
+			 //return new ModelAndView("addPackage");
+			 return new ModelAndView("redirect:/addPackage");
 		} catch (Exception e) {
 			e.printStackTrace();
-			return true;
+			return new ModelAndView("login");
 			// TODO: handle exception
 		}
 	}

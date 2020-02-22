@@ -100,7 +100,7 @@
 		                      	 
 		                       <div class="" style="background-color:#a11111;height:50px;">
 		                           <div class="" style="margin-top:10px;">
-		                           		<a href="/viewPackage/${menu.id}" style="color:white;"><b><br>View<br><br></b></a>
+		                           		<a href="/viewPackage?id=${menu.id}" style="color:white;"><b><br>View<br><br></b></a>
 		                           		
 		                           </div>
 		                           

@@ -12,6 +12,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.Entity.MenuPackage;
@@ -79,17 +81,20 @@ public class ViewController {
 		
 	}
 	
-	@GetMapping("/viewPackage/{id}")
-	public ModelAndView viewPackage(ModelMap model,HttpSession session,@PathVariable("id") long id) {
+	
+	@RequestMapping(value = "/viewPackage", method=RequestMethod.GET)
+	public ModelAndView viewPackage(@RequestParam("id") long id) {
 		
 		try {
-			
-			Optional<MenuPackage> menu=pacService.getById(1);
+			MenuPackage menu=pacService.getById(id);
 				System.out.println(menu);
 				ModelAndView model1 = new ModelAndView("viewPackage");
 				model1.addObject("user", "admin");				
-				model1.addObject("package", menu);
-
+				//model1.addObject("package", menu);
+				model1.addObject("title", menu.getTitle());
+				model1.addObject("status", menu.getStatus());
+				model1.addObject("package_id", menu.getId());
+						
 			
 			//return new ModelAndView("packages");
 			return model1;

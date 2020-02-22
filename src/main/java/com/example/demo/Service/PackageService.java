@@ -51,10 +51,10 @@ public class PackageService {
 	}
 
 	
-	public Optional<MenuPackage> getById(long id) {
+	public MenuPackage getById(long id) {
 		
 		try {
-			return repo.findById(id);
+			return repo.findmenu(id);
 		} catch (Exception e) {			
 			e.printStackTrace();
 			return null;

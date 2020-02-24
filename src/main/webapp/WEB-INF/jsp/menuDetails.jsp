@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <!DOCTYPE html>
-<html>
+<html> 
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,7 +11,7 @@
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Font Awesome -->
+  <!-- Font Awesome  https://bootsnipp.com/snippets/1dPDV-->
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
@@ -32,7 +34,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Menu </h1>
+            <h1>Menu</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -47,56 +49,81 @@
     <!-- Main content -->
     <section class="content">
 
-      <!-- Default box -->
-       <div class="container-fluid">
-		      <div class="row">
-		        <div class="col-12">
-		          
-		          <div class="card">
-		            <!-- <div class="card-header">
-		              <h3 class="card-title"></h3>
-		            </div> -->
-		            <!-- /.card-header -->
-		            <div class="card-body">
-		            <div class="row">
-		            	<div class="col-sm-10"></div>
-		            	<div class="col-sm-2">
-		            	   <a href="/addMenu" class="btn btn-primary">Add Menu&nbsp;&nbsp;&nbsp;<i class="fa fa-plus-circle  nav-icon"></i></a>
-		            	</div>
-		            </div>
-		              <table id="example1" class="table table-bordered table-striped">
-		                <thead>
-		                <tr>
-		                  <th>Id</th>
-		                  <th>Title</th>                  
-		                  <th>Description</th>		                  
-						  <th>Edit</th>
-						  <th>Delete</th>
-		                </tr>
-		                </thead>
-		                <tbody id="employee-table">
-		                      
-		                </tbody>
-		                 
-		                <tfoot>
-		                <tr>
-		                  <th>Id</th>
-		                  <th>Title</th>                  
-		                  <th>Description</th>		                  
-						  <th>Edit</th>
-						  <th>Delete</th>
-		                </tr>
-		                </tfoot>
-		              </table>
-		            </div>
-		            <!-- /.card-body -->
-		          </div>
-		          <!-- /.card -->
-		        </div>
-		        <!-- /.col -->
-		      </div>
+     <div class="container">
+         <div class="row">
+            <div class="col-lg-12 text-center my-2">
+              
+                <h4 class="border-bottom border-dark p-2">Menu's&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               		 <a href="/addMenu" class="btn btn-primary" >New&nbsp;&nbsp;&nbsp;<i class="fa fa-plus-circle  nav-icon"></i></a>
+		  
+               </h4>
+            </div>
+         </div>
+         <div class="portfolio-menu mt-2 mb-4">
+           <!--  <ul>
+               <li class="btn btn-outline-dark active" data-filter="*">All</li>
+               <li class="btn btn-outline-dark" data-filter=".gts">Girls T-shirt</li>
+               <li class="btn btn-outline-dark" data-filter=".lap">Laptops</li>
+               <li class="btn btn-outline-dark text" data-filter=".selfie">selfie</li>
+            </ul> -->
+            <ul>
+            <li class="btn btn-outline-dark active" data-filter="*">All</li>
+               <li class="btn btn-outline-dark" data-filter=".breakfast">BreakFast</li>
+               <li class="btn btn-outline-dark" data-filter=".lunch">Lunch</li>
+               <li class="btn btn-outline-dark text" data-filter=".dinner">Dinner</li>
+
+            </ul>
+         </div>
+         <div class="portfolio-item row">
+            <c:if test="${not empty lists}">
+              <c:forEach items="${lists}" var="menu">
+	              <div class="item col-md-3 ${menu.category}">
+			        	<c:if test="${user eq 'admin'}">   
+			        	<br>   
+			              <p class="text-center"><i class="fa fa-trash" style="color:red;cursor: pointer;}" aria-hidden="true"></i></p>
+			         	</c:if>
+			          <div class="card-content">
+	                      <div class="card-img">  
+	                        <img src="/images/packages/${menu.title}.jpeg" alt="">
+	                        <span><h4>${menu.status}</h4></span>
+	                        
+	                    </div>
+	                    
+	               
+	                   
+	                    <div class="card-desc text-center">
+		                       
+		                        <p><b>${menu.title}<b></b></p>
+		                      	 
+		                     	  <div class="row">
+		                     	  		<div class="col-sm-2"  >
+		                     	  			<p id="food_count${menu.id}" class="dot" style="border-radius: 50%;">0</p>
+		                     	  		</div>
+		                     	  		<div class="col-sm-4">
+		                     	  		</div>
+		                     	  		<div class="col-sm-6 row">
+		                     	  			<div class="col-sm-2"><i class="fa fa-inr col-sm-2" aria-hidden="true"></i></div>
+											<div class="col-sm-4">
+										     	<a  href="/viewMenu?id=${menu.id}"><b>${menu.cost}&nbsp;&nbsp;&nbsp;</a>
+											</div>
+											<div class="col-sm-3">
+												<i class="fa fa-plus-circle" style="font-size:30px;cursor:pointer;" aria-hidden="true" onClick="count(${menu.id})"></i>
+											</div>
+										</div>
+		                           		
+		                           		
+		                         </div>
+		                </div>
+	                </div>
+	            </div>
+	            
+	          </c:forEach>
+            </c:if>
+            
+       </div>
+       
+       
       </div>
-      <!-- /.row -->
     </section>
     <!-- /.content -->
   </div>
@@ -120,30 +147,168 @@
 <script src="dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
+<!------ Include the above in your HEAD tag ---------->
 
-<script src="/plugins/datatables/jquery.dataTables.js"></script>
-<script src="/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.js"></script>
 
+
+<style>
+
+.dot {
+  height: 25px;
+  width: 25px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* card details start  */
+@import url('https://fonts.googleapis.com/css?family=Raleway:400,400i,500,500i,600,600i,700,700i,800,800i,900,900i|Roboto+Condensed:400,400i,700,700i');
+section{
+    padding: 100px 0;
+}
+.details-card {
+	background: #ecf0f1;
+}
+
+.card-content {
+	background: #ffffff;
+	border: 4px;
+	box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
+}
+
+.card-img {
+	position: relative;
+	overflow: hidden;
+	border-radius: 0;
+	z-index: 1;
+}
+
+.card-img img {
+	width: 100%;
+	height: auto;
+	display: block;
+}
+
+.card-img span {
+	position: absolute;
+    top: 15%;
+    left: 12%;
+    background: #1ABC9C;
+    padding: 6px;
+    color: #fff;
+    font-size: 12px;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+    transform: translate(-50%,-50%);
+}
+.card-img span h4{
+        font-size: 12px;
+        margin:0;
+        padding:10px 5px;
+         line-height: 0;
+}
+.card-desc {
+	padding: 1.25rem;
+}
+
+.card-desc h3 {
+	color: #000000;
+    font-weight: 600;
+    font-size: 1.5em;
+    line-height: 1.3em;
+    margin-top: 0;
+    margin-bottom: 5px;
+    padding: 0;
+}
+
+.card-desc p {
+	color: #747373;
+    font-size: 14px;
+	font-weight: 400;
+	font-size: 1em;
+	line-height: 1.5;
+	margin: 0px;
+	margin-bottom: 20px;
+	padding: 0;
+	font-family: 'Raleway', sans-serif;
+}
+.btn-card{
+	background-color: #1ABC9C;
+	color: #fff;
+	box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
+    padding: .84rem 2.14rem;
+    font-size: .81rem;
+    -webkit-transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
+    -o-transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
+    margin: 0;
+    border: 0;
+    -webkit-border-radius: .125rem;
+    border-radius: .125rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    white-space: normal;
+    word-wrap: break-word;
+    color: #fff;
+}
+.btn-card:hover {
+    background: orange;
+}
+a.btn-card {
+    text-decoration: none;
+    color: #fff;
+}
+/* End card section */
+</style>
 <script>
-$(function () {
-    $("#example1").DataTable();
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-    });
-  });
 
 
+function count(id){
+
+		var c= parseInt($("#food_count"+id+"").text());
+		
+		c+=1;	
+	   $("#food_count"+id+"").text(c);	
+}
+
+$('.portfolio-item').isotope({
+ 	itemSelector: '.item',
+ 	layoutMode: 'fitRows'
+ });
+ $('.portfolio-menu ul li').click(function(){
+ 	$('.portfolio-menu ul li').removeClass('active');
+ 	$(this).addClass('active');
+ 	
+ 	var selector = $(this).attr('data-filter');
+ 	$('.portfolio-item').isotope({
+ 		filter:selector
+ 	});
+ 	return  false;
+ });
+ $(document).ready(function() {
+ var popup_btn = $('.popup-btn');
+ popup_btn.magnificPopup({
+ type : 'image',
+ gallery : {
+ 	enabled : true
+ }
+ });
+ });
+ 
 $(document).ready(function(){
 	  $.ajax({
 	      type: "GET",	     
 	      url: "/login/menu",	    
 	      success :function(result) {
-	    	  console.log(result);
+	    	  //console.log(result);
 	    	  $(".nav-bar").append(result);
 	    	
 	     },
@@ -152,41 +317,50 @@ $(document).ready(function(){
     	   
     	   	        }
 	  });
-	  
-	  
-		//alert("ddd");
-	    var t = $('#example1').DataTable();
-	     //alert("dd");
-
-		  $.ajax({
-		      type: "GET",
-		      contentType : 'application/json; charset=utf-8',
-		      dataType : 'json',
-		      url: "/menu/all",
-		      //data: JSON.stringify(employee),
-		      success :function(result) {
-		            console.log(result);
-		    	  $.each(result,function( i,j ) {
-		    		  
-		    		  t.row.add( [
-		    			  j.id,j.title,j.description,'<i class="fas fa-edit" style="cursor:pointer;"></i>','<i class="fas fa-trash-alt" style="cursor:pointer;">'
-		    		  ]).draw( false );
-		    	  });
-		     },
-	       error: function(e){          	   
-	    	  console.log(e)
-	    	   
-	    	  }
-		  });
-		
 	
 });
 
-
-
+ 
 </script>
+<style>
+body{
+	margin:0;
+	padding:0;
+}
+/* .container{
+	width:90%
+	margin:10px auto;
+} */
+.portfolio-menu{
+	text-align:center;
+}
+.portfolio-menu ul li{
+	display:inline-block;
+	margin:0;
+	list-style:none;
+	padding:10px 15px;
+	cursor:pointer;
+	-webkit-transition:all 05s ease;
+	-moz-transition:all 05s ease;
+	-ms-transition:all 05s ease;
+	-o-transition:all 05s ease;
+	transition:all .5s ease;
+}
+
+.portfolio-item{
+	/*width:100%;*/
+}
+.portfolio-item .item{
+	/*width:303px;*/
+	float:left;
+	margin-bottom:10px;
+}
+
+
+</style>
 </body>
 </html>
+  
   
   
   

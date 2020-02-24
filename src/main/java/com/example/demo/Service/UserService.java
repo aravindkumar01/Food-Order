@@ -1,0 +1,73 @@
+package com.example.demo.Service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.demo.Entity.Login;
+import com.example.demo.Entity.User;
+import com.example.demo.Repo.LoginRepo;
+import com.example.demo.Repo.UserRepo;
+
+@Service
+public class UserService {
+
+	
+	@Autowired
+	UserRepo repo;
+	
+	@Autowired
+	LoginRepo login;
+	
+	public boolean userAdd(User user) {
+		
+		try {
+			
+			Login log=new Login();
+			 log.setUsername(user.getEmail());
+			 log.setPassword(user.getEmail());
+			 log.setRole(user.getRole());
+			 log.setStatus(true);
+			 
+			repo.save(user);
+			
+			login.save(log);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+			// TODO: handle exception
+		}
+	}
+	
+	
+	public List<User> findAll(){
+		
+		try {
+			
+			return repo.findAll();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return null;
+		}
+		
+		
+		
+	}
+
+	public boolean deleteAdd(long id) {
+		
+		try {
+			repo.deleteById(id);
+			
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+			// TODO: handle exception
+		}
+	}
+	
+}

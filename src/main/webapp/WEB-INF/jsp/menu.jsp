@@ -1,6 +1,7 @@
   <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
@@ -188,6 +189,18 @@
 		                <a href="/orderHistory" class="nav-link">
 		                  <i class="fa fa-history nav-icon"></i>
 		                  <p style="color:white;">Order History</p>
+		                </a>
+		              </li>
+		              <li class="nav-item">
+		                <a href="/cart" class="nav-link">
+		                  <i class="fa fa-shopping-cart nav-icon"></i>
+		                  <p style="color:white;">Card</p>
+		                </a>
+		              </li>
+		              <li class="nav-item">
+		                <a href="/logout" class="nav-link">
+		                  <i class="fa fa-sign-out  nav-icon"></i>
+		                  <p style="color:white;">Logout</p>
 		                </a>
 		              </li>
         </ul>

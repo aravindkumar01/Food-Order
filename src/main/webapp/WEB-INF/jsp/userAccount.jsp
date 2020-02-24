@@ -43,55 +43,68 @@
             <div class="card card-warning">
               <div class="card-header">
                <!--  <h3 class="card-title">Department Details</h3> -->
+               <button onClick="editUser()" class="btn btn-success"><i class="fa fa-pencil" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Edit</button>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                 <form role="form" action="/menu/add" enctype="multipart/form-data"  method="post"> 
+                 <form role="form" id="user-account"> 
                 
 				  <div class="form-group">
-                    <label>Title</label>
-                    <input type="text" class="form-control" placeholder="Enter name of menu" id="title" name="title" required="required">
+                    <label>Name</label>
+                    <input type="text" class="form-control" placeholder="Enter name " id="name" name="name" required="required">
                     
                   </div>
                   
+                 <div class="form-group">
+                    <label>Gender</label>
+                    <select class="form-control" id="gender" name="gender"  required="required">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                         <option value="others">Others</option>
+                    </select>
+                  </div>
+                  
                   <div class="form-group">
-                    <label>Image</label>
-                    <input type="file" class="form-control" name="file" placeholder="Choose the imgae" id="img"  required="required">
+                    <label>Email</label>
+                    <input type="gmail" class="form-control" placeholder="Enter email id " id="email" required="required">                    
                   </div>
                   
                    <div class="form-group">
-                    <label>Cost</label>
-                    <input type="number" class="form-control" name="cost" placeholder="Enter the cost"  required="required">
+                    <label>Phone number</label>
+                    <input type="number" class="form-control" placeholder="Enter phone number" id="phone" required="required">                    
                   </div>
                   
-                  <div class="form-group">
-                    <label>Category</label>
-                    <select class="form-control" id="Category" name="category"  required="required">
-                        <option value="breakfast">breakfast</option>
-                        <option value="lunch">lunch</option>
-                         <option value="dinner">dinner</option>
-                    </select>
-                  </div>
-                     <div class="form-group">
-                    <label>Status</label>
-                    <select class="form-control" id="status" name="status"  required="required">
-                        <option value="avalible">Avalible</option>
-                        <option value="unavalible">Un Avalible</option>
-                    </select>
-                  </div>
                   <div class="row">
                     <div class="col-sm-12 col-xs-12">
                       <!-- textarea -->
                       <div class="form-group">
-                        <label>Description</label>
-                        <textarea class="form-control" rows="3" placeholder="Enter your Description" id="description" name="description" required="required"></textarea>
+                        <label>Address</label>
+                        <textarea class="form-control" rows="3" placeholder="Enter your address" id="address"  required="required"></textarea>
                       </div>
                     </div>                    
                   </div>
+                  
+                 <div class="form-group">
+                    <label>City</label>
+                    <input type="text" class="form-control" placeholder="Enter city" id="city" required="required">                    
+                 </div>
 
+     			 <div class="form-group">
+                    <label>District</label>
+                    <input type="text" class="form-control" placeholder="Enter district" id="district" required="required">                    
+                 </div>
+                 
+                 <div class="form-group">
+                    <label>Pincode</label>
+                    <input type="number" class="form-control" placeholder="Enter pincode" id="pincode" required="required">                    
+                 </div>
+               <div class="form-group">
+                    <label>State</label>
+                    <input type="text" class="form-control" placeholder="Enter state" id="state" required="required">                    
+                 </div>
 				<div class="row">
 					<div class="col-md-6">
-						<button  type="submit" class="btn btn-block btn-success btn toastrDefaultSuccess" id="saveEmployee">Save</button>
+						<button  type="button" onClick="saveUser()" class="btn btn-block btn-success btn toastrDefaultSuccess" id="saveEmployee">Save</button>
 					</div>
 					<div class="col-md-6">
 						<button type="button" class="btn btn-block btn-info btn">Cancel</button>
@@ -148,7 +161,17 @@
 <script src="plugins/toastr/toastr.min.js"></script>
 
 <script>
+
+function editUser(){
+	
+	 $("#user-account :input").prop("disabled", false);
+}
+
+
 $(document).ready(function(){
+	 $("#user-account :input").prop("disabled", true);
+		
+	
 	  $.ajax({
 	      type: "GET",	     
 	      url: "/login/menu",	    
@@ -162,10 +185,47 @@ $(document).ready(function(){
     	   
     	   	        }
 	  });
-	
+
+
+
+	 
 });
 
 
+function saveUser(){
+
+	 $("#user-account :input").prop("disabled", true);
+
+	 var user= {"name":$("#name").val(),"gender":$("#gender").val(),"address":$("#address").val(),
+					"email":$("#email").val(),"phone":$("#phone").val(),"city":$("#city").val(),
+					"state":$("#state").val(),"district":$("#district").val(),"pincode":$("#pincode".val()
+			 };
+	 $.ajax({
+	      type: "PUT",
+	      contentType : 'application/json; charset=utf-8',
+	      dataType : 'json',
+	      url: "/user/add",
+	      data:  JSON.stringify(menu),
+	      
+	      success :function(result) {
+	         if(result){
+	        	 alertMsg("User updated!");
+	        	 resetForm();
+	         }
+	         
+	     },
+        error: function(e){    
+       	 errorToast("Unable to update ");
+       	// resetForm();
+     	  console.log(e)
+     	   
+     	   	        }
+	  });
+  
+	 
+
+	
+}
 function alertMsg(msg){
 	
 		 toastr.success(msg);

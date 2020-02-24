@@ -3,15 +3,22 @@ package com.example.demo.Controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.Entity.Menu;
 import com.example.demo.Service.MenuService;
@@ -21,18 +28,33 @@ import com.example.demo.Service.MenuService;
 public class MenuController {
 
 
+
+	@Autowired
+	ServletContext context;
+	
 	@Autowired
 	MenuService service;
 	
 	@PostMapping("/add")
-	public @ResponseBody boolean add(@RequestBody Menu entity) {
+	public ModelAndView add(HttpServletRequest request, HttpServletResponse response,@RequestParam("file") MultipartFile file) {
 		
 		try {
-			
-			return service.add(entity);
+			 Part filePart =request.getPart("file");
+			   
+			    String absolutePath = context.getRealPath("/images/menu/").toString();
+			    
+				Menu entity=new Menu();
+				entity.setTitle(request.getParameter("title"));
+				entity.setCost(request.getParameter("cost"));
+				entity.setDescription(request.getParameter("description"));
+				entity.setStatus(request.getParameter("status"));
+				entity.setCategory(request.getParameter("category"));
+			    
+			 service.add(entity);
+			 return new ModelAndView("redirect:/addMenu");
 		} catch (Exception e) {
 			e.printStackTrace();
-			return true;
+			  return new ModelAndView("redirect:/login");
 			// TODO: handle exception
 		}
 	}

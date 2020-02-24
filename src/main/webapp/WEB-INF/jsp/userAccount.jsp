@@ -54,7 +54,11 @@
                     <input type="text" class="form-control" placeholder="Enter name " id="name" name="name" required="required">
                     
                   </div>
-                  
+                  <div class="form-group hidden">
+                    <label>Id</label>
+                    <input type="number" class="form-control" placeholder="Enter id" id="user_id" required="required">                    
+                 </div>
+                 
                  <div class="form-group">
                     <label>Gender</label>
                     <select class="form-control" id="gender" name="gender"  required="required">
@@ -102,6 +106,7 @@
                     <label>State</label>
                     <input type="text" class="form-control" placeholder="Enter state" id="state" required="required">                    
                  </div>
+                 
 				<div class="row">
 					<div class="col-md-6">
 						<button  type="button" onClick="saveUser()" class="btn btn-block btn-success btn toastrDefaultSuccess" id="saveEmployee">Save</button>
@@ -196,16 +201,16 @@ function saveUser(){
 
 	 $("#user-account :input").prop("disabled", true);
 
-	 var user= {"name":$("#name").val(),"gender":$("#gender").val(),"address":$("#address").val(),
+	 var user= {"id":$("#user_id").val(),"name":$("#name").val(),"gender":$("#gender").val(),"address":$("#address").val(),
 					"email":$("#email").val(),"phone":$("#phone").val(),"city":$("#city").val(),
-					"state":$("#state").val(),"district":$("#district").val(),"pincode":$("#pincode".val()
+					"state":$("#state").val(),"district":$("#district").val(),"pincode":$("#pincode").val()
 			 };
 	 $.ajax({
 	      type: "PUT",
 	      contentType : 'application/json; charset=utf-8',
 	      dataType : 'json',
-	      url: "/user/add",
-	      data:  JSON.stringify(menu),
+	      url: "/user/update",
+	      data:  JSON.stringify(user),
 	      
 	      success :function(result) {
 	         if(result){

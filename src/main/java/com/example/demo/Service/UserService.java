@@ -29,7 +29,12 @@ public class UserService {
 			 log.setPassword(user.getEmail());
 			 log.setRole(user.getRole());
 			 log.setStatus(true);
-			 
+		
+			 User u=repo.findByEmail(user.getEmail());
+			 	if(u!=null) {
+			 		
+			 		return false;
+			 	}
 			repo.save(user);
 			
 			login.save(log);
@@ -62,6 +67,19 @@ public class UserService {
 		try {
 			repo.deleteById(id);
 			
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+			// TODO: handle exception
+		}
+	}
+
+
+	public boolean updateUser(User user) {
+		try {
+			
+			repo.save(user);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();

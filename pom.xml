@@ -107,7 +107,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>SMS</finalName>
+		<finalName>tasty</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

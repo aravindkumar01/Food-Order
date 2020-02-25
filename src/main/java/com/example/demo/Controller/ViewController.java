@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.Entity.Menu;
 import com.example.demo.Entity.MenuPackage;
+import com.example.demo.Entity.User;
 import com.example.demo.Service.MenuService;
 import com.example.demo.Service.PackageService;
 
@@ -31,7 +32,8 @@ public class ViewController {
 	MenuService menuSer;
 	
 	
-	
+	@Autowired
+	HttpSession session;
 	
 	@RequestMapping("/departmentDetails")
 	public String departmentDetails() {
@@ -62,7 +64,12 @@ public class ViewController {
 		return "login";
 	}
 	
-	
+
+	@RequestMapping("/cart")
+	public String cart(HttpSession session) {
+		
+		return "cart";
+	}
 
 
 
@@ -70,6 +77,8 @@ public class ViewController {
 	public ModelAndView addMenu(ModelMap model,HttpSession session) {
 		
 		try {
+			
+			
 			
 			
 			model.addAttribute("user", "admin");	
@@ -86,9 +95,21 @@ public class ViewController {
 	
 	
 	@RequestMapping("/userAccount")
-	public ModelAndView userAccont(ModelMap model,HttpSession session) {
+	public ModelAndView userAccont(ModelMap model,HttpSession session1) {
 		
 		try {
+			
+			User u=(User)session.getAttribute("user");
+			
+			
+			model.addAttribute("name", u.getName());
+			model.addAttribute("id", u.getId());	
+			model.addAttribute("gender",u.getGender());
+			model.addAttribute("email",u.getEmail());
+			model.addAttribute("phone",u.getPhone());
+			model.addAttribute("address",u.getAddress());
+			model.addAttribute("city",u.getCity());
+			model.addAttribute("state", u.getState());
 			
 			
 			model.addAttribute("user", "admin");	

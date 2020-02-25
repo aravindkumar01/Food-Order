@@ -51,17 +51,14 @@
                 
 				  <div class="form-group">
                     <label>Name</label>
-                    <input type="text" class="form-control" placeholder="Enter name " id="name" name="name" required="required">
+                    <input type="text" class="form-control" value="${name}" placeholder="Enter name " id="name" name="name" required="required">
                     
                   </div>
-                  <div class="form-group hidden">
-                    <label>Id</label>
-                    <input type="number" class="form-control" placeholder="Enter id" id="user_id" required="required">                    
-                 </div>
+                
                  
                  <div class="form-group">
                     <label>Gender</label>
-                    <select class="form-control" id="gender" name="gender"  required="required">
+                    <select class="form-control" id="gender" name="gender" value="${gender}" required="required">
                         <option value="male">Male</option>
                         <option value="female">Female</option>
                          <option value="others">Others</option>
@@ -70,12 +67,12 @@
                   
                   <div class="form-group">
                     <label>Email</label>
-                    <input type="gmail" class="form-control" placeholder="Enter email id " id="email" required="required">                    
+                    <input type="gmail" class="form-control" value="${email}" placeholder="Enter email id " id="email" required="required">                    
                   </div>
                   
                    <div class="form-group">
                     <label>Phone number</label>
-                    <input type="number" class="form-control" placeholder="Enter phone number" id="phone" required="required">                    
+                    <input type="number" class="form-control" value="${phone}" placeholder="Enter phone number" id="phone" required="required">                    
                   </div>
                   
                   <div class="row">
@@ -90,7 +87,7 @@
                   
                  <div class="form-group">
                     <label>City</label>
-                    <input type="text" class="form-control" placeholder="Enter city" id="city" required="required">                    
+                    <input type="text" class="form-control" value="${city}" placeholder="Enter city" id="city" required="required">                    
                  </div>
 
      			 <div class="form-group">
@@ -104,7 +101,7 @@
                  </div>
                <div class="form-group">
                     <label>State</label>
-                    <input type="text" class="form-control" placeholder="Enter state" id="state" required="required">                    
+                    <input type="text" class="form-control" value="${state}" placeholder="Enter state" id="state" required="required">                    
                  </div>
                  
 				<div class="row">
@@ -117,7 +114,11 @@
 				</div>
 				
                 </form>
-								
+						
+				 <div class="form-group invisible">
+                    <label>Id</label>
+                    <input type="number" class="form-control" value="${id}" placeholder="Enter id" id="user_id" required="required">                    
+                 </div>		
               </div>
               <!-- /.card-body -->
             </div>
@@ -138,13 +139,7 @@
   </div>
   <!-- /.content-wrapper -->
 
-  <footer class="main-footer">
-    <div class="float-right d-none d-sm-block">
-      <b>Version</b> 3.0.2
-    </div>
-    <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong> All rights
-    reserved.
-  </footer>
+ <jsp:include page="footer.jsp" />
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
@@ -165,6 +160,13 @@
 
 <script src="plugins/toastr/toastr.min.js"></script>
 
+
+<style>
+
+.invisible {
+  visibility: hidden;
+}
+</style>
 <script>
 
 function editUser(){
@@ -201,6 +203,7 @@ function saveUser(){
 
 	 $("#user-account :input").prop("disabled", true);
 
+	 alert($("#user_id").val());
 	 var user= {"id":$("#user_id").val(),"name":$("#name").val(),"gender":$("#gender").val(),"address":$("#address").val(),
 					"email":$("#email").val(),"phone":$("#phone").val(),"city":$("#city").val(),
 					"state":$("#state").val(),"district":$("#district").val(),"pincode":$("#pincode").val()

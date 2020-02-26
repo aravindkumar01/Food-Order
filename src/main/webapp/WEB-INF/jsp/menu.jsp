@@ -194,7 +194,7 @@
 		              <li class="nav-item">
 		                <a href="/cart" class="nav-link">
 		                  <i class="fa fa-shopping-cart nav-icon"></i>
-		                  <p style="color:white;">Card</p>
+		                  <p style="color:white;">Cart</p>
 		                </a>
 		              </li>
 		              <li class="nav-item">

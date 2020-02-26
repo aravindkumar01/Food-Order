@@ -70,10 +70,10 @@ public class PackageController {
 							
 			 service.add(entity);
 			 //return new ModelAndView("addPackage");
-			 return new ModelAndView("redirect:/addPackage");
+			 return new ModelAndView("redirect:/packages");
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new ModelAndView("login");
+			return new ModelAndView("redirect:/");
 			// TODO: handle exception
 		}
 	}

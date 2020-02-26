@@ -1,5 +1,8 @@
 package com.example.demo.Controller;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,6 +52,19 @@ public class MenuController {
 				entity.setDescription(request.getParameter("description"));
 				entity.setStatus(request.getParameter("status"));
 				entity.setCategory(request.getParameter("category"));
+				
+				 String path=absolutePath+entity.getTitle()+".jpeg";
+					entity.setImg_path(absolutePath);
+					  byte[] bytes = file.getBytes();
+
+						// Creating the directory to store file
+						File serverFile=new File(path);
+						
+						BufferedOutputStream stream = new BufferedOutputStream(
+								new FileOutputStream(serverFile));
+						stream.write(bytes);
+						stream.close();
+						
 			    
 			 service.add(entity);
 			 return new ModelAndView("redirect:/addMenu");
@@ -75,18 +91,13 @@ public class MenuController {
 	
 	
 	
-	@GetMapping("/{id}")
-	public @ResponseBody Optional<Menu> getById(@PathVariable("id") long id) {
-		try {
-			
-			return service.getById(id);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-			// TODO: handle exception
-		}
-	}
-	
+	/*
+	 * @GetMapping("/{id}") public @ResponseBody Menu getById(@PathVariable("id")
+	 * long id) { try {
+	 * 
+	 * return service.findByMenu(id); } catch (Exception e) { e.printStackTrace();
+	 * return null; // TODO: handle exception } }
+	 */
 	
 	@DeleteMapping("/{id}")
 	public @ResponseBody boolean delete(@PathVariable("id") long id) {

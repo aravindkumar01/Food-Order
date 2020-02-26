@@ -46,10 +46,10 @@ public class MenuService {
 	}
 
 	
-	public Optional<Menu> getById(long id) {
+	public Menu getById(long id) {
 		
 		try {
-			return repo.findById(id);
+			return repo.findByMenu(id);
 		} catch (Exception e) {			
 			e.printStackTrace();
 			return null;

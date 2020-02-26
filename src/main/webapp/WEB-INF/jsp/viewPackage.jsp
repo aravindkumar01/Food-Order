@@ -22,6 +22,9 @@
 <link
 	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700"
 	rel="stylesheet">
+	
+  <link rel="stylesheet" href="plugins/toastr/toastr.min.css">
+  
 </head>
 <body class="hold-transition sidebar-mini">
 	<!-- Site wrapper -->
@@ -87,6 +90,7 @@
 								<button style="margin-left: 140px;"
 									class="btn btn-danger btn-lg"
 									onClick="addCart('${package_id}')">Order</button>
+									
 
 							</div>
 
@@ -161,6 +165,8 @@
 	<script src="dist/js/adminlte.min.js"></script>
 	<!-- AdminLTE for demo purposes -->
 	<script src="dist/js/demo.js"></script>
+	
+<script src="plugins/toastr/toastr.min.js"></script>
 
 	<style>
 #customers {
@@ -291,8 +297,45 @@ section {
 		});
 
 		function addCart(id) {
-			alert(id);
+
+			 $.ajax({
+			      type: "POST",	     
+			      url: "/cart/add"	,
+			      //data:  JSON.stringify(cart),  
+			      data:{
+			    	  item_type:"package",
+			    	  item_id:id,
+			    	  quantity:0		    	  	  
+				      } ,
+			      success :function(result) {
+			    	  if(result){
+			    		  alertMsg("Cart added"); 
+			    		  window.location.href = '/cart';
+						
+				    	 }
+			    	
+			     },
+		      error: function(e){   
+		    	  errorToast("Unable to add try again");       	   
+		   	  console.log(e)
+		   	   
+		   	   	        }
+			  });
 		}
+
+
+
+
+		function alertMsg(msg){
+			
+			 toastr.success(msg);
+		}
+
+		function errorToast(msg){
+
+		toastr.error(msg);
+		}
+			
 	</script>
 </body>
 </html>

@@ -21,6 +21,8 @@
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
 <body class="hold-transition sidebar-mini">
+
+  <link rel="stylesheet" href="plugins/toastr/toastr.min.css">
 <!-- Site wrapper -->
 <div class="wrapper">
   <!-- Navbar -->
@@ -84,7 +86,7 @@
 			         	</c:if>
 			          <div class="card-content">
 	                      <div class="card-img">  
-	                        <img src="/images/packages/${menu.title}.jpeg" alt="">
+	                        <img src="/images/menu/${menu.title}.jpeg" alt="">
 	                        <span><h4>${menu.status}</h4></span>
 	                        
 	                    </div>
@@ -96,18 +98,23 @@
 		                        <p><b>${menu.title}<b></b></p>
 		                      	 
 		                     	  <div class="row">
-		                     	  		<div class="col-sm-2"  >
-		                     	  			<p id="food_count${menu.id}" class="dot" style="border-radius: 50%;">0</p>
+		                     	  		<div class="col-sm-4 row"  >
+		                     	  		
+		                     	  			<p id="food_count${menu.id}" class="dot col-sm-6" style="border-radius: 35%;">0</p>
+		                     	  			<i style="margin-top:1px; font-size:30px;cursor:pointer;" class="fa fa-plus-circle col-sm-6"  aria-hidden="true" onClick="count(${menu.id})"></i>
+										
 		                     	  		</div>
-		                     	  		<div class="col-sm-4">
+		                     	  		<div class="col-sm-2">
 		                     	  		</div>
 		                     	  		<div class="col-sm-6 row">
 		                     	  			<div class="col-sm-2"><i class="fa fa-inr col-sm-2" aria-hidden="true"></i></div>
-											<div class="col-sm-4">
+											<div class="col-sm-5">
 										     	<a  href="/viewMenu?id=${menu.id}"><b>${menu.cost}&nbsp;&nbsp;&nbsp;</a>
 											</div>
-											<div class="col-sm-3">
-												<i class="fa fa-plus-circle" style="font-size:30px;cursor:pointer;" aria-hidden="true" onClick="count(${menu.id})"></i>
+											
+											<div class="col-sm-5">
+												<i class="fa fa-check" id="displayTick${menu.id}"  style="font-size:20px;cursor:pointer;color:green;" onClick="saveMenu('tick',${menu.id})" aria-hidden="true"></i>
+												<i class="fa fa-times" id="displayCancel${menu.id}" style="font-size:20px;cursor:pointer;color:red;display:none;" onClick="cancelMenu('cancel',${menu.id})" aria-hidden="true"></i>
 											</div>
 										</div>
 		                           		
@@ -152,6 +159,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.js"></script>
+
+<script src="plugins/toastr/toastr.min.js"></script>
 
 
 <style>
@@ -273,6 +282,7 @@ a.btn-card {
 
 function count(id){
 
+	//$(".display").show();
 		var c= parseInt($("#food_count"+id+"").text());
 		
 		c+=1;	
@@ -319,6 +329,91 @@ $(document).ready(function(){
 	  });
 	
 });
+
+
+function saveMenu(type,id){
+
+	if(parseInt($("#food_count"+id+"").text())==0){
+		errorToast("Please choose quantity");     
+		
+		return false;
+	}
+  
+  $("#displayTick"+id+"").hide();
+  $("#displayCancel"+id+"").show();
+		//alert(parseInt($("#food_count"+id+"").text()));
+	//var cart={"item_type":"menu","item_id":id,"quantity":parseInt($("#food_count"+id+"").text()),"user_id":0};
+
+	
+  
+
+	 $.ajax({
+	      type: "POST",	     
+	      url: "/cart/add"	,
+	      //data:  JSON.stringify(cart),  
+	      data:{
+	    	  item_type:"menu",
+	    	  item_id:id,
+	    	  quantity:parseInt($("#food_count"+id+"").text())	    	  
+		      } ,
+	      success :function(result) {
+	    	  if(result){
+	    		  alertMsg("Cart added");
+				
+		    	 }
+	    	
+	     },
+      error: function(e){   
+    	  errorToast("Unable to add try again");       	   
+   	  console.log(e)
+   	   
+   	   	        }
+	  });
+ 	
+}
+
+
+
+
+function cancelMenu(type,id){
+
+
+	
+	$("#displayTick"+id+"").show();
+	$("#displayCancel"+id+"").hide();
+
+
+
+	 $.ajax({
+	      type: "DELETE",	     
+	      url: "/cart/delete/"+id	,
+	      //data:  JSON.stringify(cart),  
+	     
+	      success :function(result) {
+	    	  if(result){
+	    		  alertMsg("Removed");
+				
+		    	 }
+	    	
+	     },
+     error: function(e){   
+   	  errorToast("Unable to add try again");       	   
+  	  console.log(e)
+  	   
+  	   	        }
+	  });
+}
+
+
+function alertMsg(msg){
+	
+	 toastr.success(msg);
+}
+
+function errorToast(msg){
+
+toastr.error(msg);
+}
 
  
 </script>

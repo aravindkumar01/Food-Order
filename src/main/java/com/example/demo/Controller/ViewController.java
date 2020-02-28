@@ -17,6 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.example.demo.Entity.Menu;
 import com.example.demo.Entity.MenuPackage;
 import com.example.demo.Entity.User;
+import com.example.demo.Entity.ViewCart;
+import com.example.demo.Service.CartService;
 import com.example.demo.Service.MenuService;
 import com.example.demo.Service.PackageService;
 
@@ -30,6 +32,9 @@ public class ViewController {
 	
 	@Autowired
 	MenuService menuSer;
+	
+	@Autowired
+	CartService cartService;
 	
 	
 	@Autowired
@@ -65,21 +70,84 @@ public class ViewController {
 	}
 	
 
-	@RequestMapping("/cart")
-	public String cart(HttpSession session) {
+
+
+	
+
+	
+	@RequestMapping("/payment")
+	public ModelAndView payment(ModelMap model,HttpSession session) {
 		
-		return "cart";
+		try {
+			User u=(User)session.getAttribute("user");
+			
+				if(u==null) {
+					
+					return new ModelAndView("login");
+				}
+
+
+			List<ViewCart> list=cartService.getView();
+			ModelAndView model1 = new ModelAndView("payment");
+			model1.addObject("user", "admin");				
+			model1.addObject("lists", list);
+			//return new ModelAndView("packages");
+			return model1;
+
+		
+			//return "packages";
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return null;
+		}
+		
 	}
+	
+	
+
+	
+	@RequestMapping("/cart")
+	public ModelAndView cart(ModelMap model,HttpSession session) {
+		
+		try {
+			User u=(User)session.getAttribute("user");
+			
+			if(u==null) {
+				
+				return new ModelAndView("login");
+			}
 
 
+			List<ViewCart> list=cartService.getView();
+			ModelAndView model1 = new ModelAndView("cart");
+			model1.addObject("user", "admin");				
+			model1.addObject("lists", list);
+			//return new ModelAndView("packages");
+			return model1;
 
+		
+			//return "packages";
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return null;
+		}
+		
+	}
+	
 	@RequestMapping("/addMenu")
 	public ModelAndView addMenu(ModelMap model,HttpSession session) {
 		
 		try {
 			
 			
+			User u=(User)session.getAttribute("user");
 			
+			if(u==null) {
+				
+				return new ModelAndView("login");
+			}
 			
 			model.addAttribute("user", "admin");	
 			return new ModelAndView("addMenu");
@@ -101,6 +169,10 @@ public class ViewController {
 			
 			User u=(User)session.getAttribute("user");
 			
+			if(u==null) {
+				
+				return new ModelAndView("login");
+			}
 			
 			model.addAttribute("name", u.getName());
 			model.addAttribute("id", u.getId());	
@@ -132,11 +204,17 @@ public class ViewController {
 		
 		try {
 			
+			User u=(User)session.getAttribute("user");
+			
+			if(u==null) {
+				
+				return new ModelAndView("login");
+			}
 			List<Menu> menu=new ArrayList<>();
 			menu=menuSer.getAll();
 			System.out.println(menu);
 			ModelAndView model1 = new ModelAndView("menuDetails");
-			model1.addObject("user", "admin");				
+			model1.addObject("user", u.getRole());				
 			model1.addObject("lists", menu);
 			//return new ModelAndView("packages");
 			return model1;
@@ -159,6 +237,12 @@ public class ViewController {
 		
 		try {
 			
+			User u=(User)session.getAttribute("user");
+			
+			if(u==null) {
+				
+				return new ModelAndView("login");
+			}
 			List<MenuPackage> menu=new ArrayList<>();
 				menu=pacService.getAll();
 				System.out.println(menu);
@@ -183,6 +267,14 @@ public class ViewController {
 	public ModelAndView viewPackage(@RequestParam("id") long id) {
 		
 		try {
+			
+			User u=(User)session.getAttribute("user");
+			
+			if(u==null) {
+				
+				return new ModelAndView("login");
+			}
+			
 			MenuPackage menu=pacService.getById(id);
 				System.out.println(menu);
 				ModelAndView model1 = new ModelAndView("viewPackage");
@@ -211,6 +303,12 @@ public class ViewController {
 	public ModelAndView addPackages(ModelMap model,HttpSession session) {
 		
 		try {
+			User u=(User)session.getAttribute("user");
+			
+			if(u==null) {
+				
+				return new ModelAndView("login");
+			}
 			
 			model.addAttribute("persons","");
 			return new ModelAndView("addPackage");
@@ -230,12 +328,15 @@ public class ViewController {
 	
 		
 		try {
-		//	Login l=(Login)session.getAttribute("user");
+			User u=(User)session.getAttribute("user");
 			
-		//System.out.println(l.getUsername()+"---------"+l.getRole());
-		//	model.addAttribute("userType",l.getRole());
-			//model.addObject("employeeObj", new EmployeeBean(123));
-			//model.addObject("msg", "Employee information.");
+			if(u==null) {
+				
+				return new ModelAndView("login");
+			}
+			
+			 model.addAttribute("username",u.getEmail());
+		    model.addAttribute("userType",u.getRole());
 			return new ModelAndView("menu");
 		} catch (Exception e) {
 			e.printStackTrace();

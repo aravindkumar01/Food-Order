@@ -7,7 +7,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
 @Entity
@@ -27,7 +30,7 @@ public class Cart {
 	
 	
 	@Column
-	@CreatedDate
+	@CreationTimestamp	
 	private Date update_date;
 	
 	
@@ -38,7 +41,20 @@ public class Cart {
 	private int quantity;
 	
 	
+	@Column
+	private boolean payment=false;
 	
+	
+
+
+	public boolean isPayment() {
+		return payment;
+	}
+
+
+	public void setPayment(boolean payment) {
+		this.payment = payment;
+	}
 
 
 	public String getItem_type() {

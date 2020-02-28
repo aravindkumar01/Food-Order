@@ -1,5 +1,6 @@
 package com.example.demo.Service;
 
+import java.security.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,7 +72,7 @@ public class CartService {
 			User u=(User)session.getAttribute("user");
 			List<ViewCart> list=new ArrayList<>();
 			
-				List<Cart> cart=repo.findCartUser(u.getId());
+				List<Cart> cart=repo.findCartUser(u.getId(),false);
 				
 				 for(Cart c:cart) {
 					 ViewCart car=new ViewCart();
@@ -81,22 +82,28 @@ public class CartService {
 						 Menu m=menu.getById(c.getItem_id());
 						  car.setId(m.getId());
 						  car.setImg(m.getTitle());
+						  car.setCost(m.getCost());
 						  car.setItem_id(m.getId());
 						  car.setItem_type("menu");
 						  car.setTitle(m.getTitle());
 						  car.setUser_id(u.getId());
+						  car.setPath("/images/menu/"+m.getTitle()+".jpeg");
+						  car.setQuantity(c.getQuantity());
+						  
 						 
 					 }
 					 
-					 if(c.getItem_type().equalsIgnoreCase("pacakge")) {
+					 if(c.getItem_type().equalsIgnoreCase("package")) {
 						 
 						MenuPackage m=pacService.getById(c.getItem_id()); 
+						car.setCost(m.getCost());
 						  car.setId(m.getId());
 						  car.setImg(m.getTitle());
 						  car.setItem_id(m.getId());
 						  car.setItem_type("menu");
 						  car.setTitle(m.getTitle());
 						  car.setUser_id(u.getId());
+						  car.setPath("/images/packages/"+m.getTitle()+".jpeg");
 					 }
 					 
 					 list.add(car);
@@ -112,6 +119,30 @@ public class CartService {
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+
+	public boolean paymentCart() {
+
+			try {
+				
+				User u=(User)session.getAttribute("user");
+				
+				List<Cart> cart=repo.findCartUser(u.getId(),false);
+				
+				
+				 for(Cart c:cart) {
+					 repo.updateCartStatus(c.getUser_id());
+				 }
+				
+				
+				return true;
+			} catch (Exception e) {
+				e.printStackTrace();
+				return false;
+				// TODO: handle exception
+			}
+		
 	}
 
 }

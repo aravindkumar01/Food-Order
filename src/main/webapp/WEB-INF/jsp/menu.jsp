@@ -1,6 +1,8 @@
   <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -140,10 +142,10 @@
       <!-- Sidebar user (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+         <!--  <i class="fa fa-user-circle" aria-hidden="true"></i> -->
         </div>
         <div class="info" >
-          <a href="#" class="d-block" style="color:white;">Alexander Pierce</a>
+          <a href="#" class="d-block" style="color:white;">${username}</a>
         </div>
       </div>
 
@@ -152,6 +154,9 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
+               
+               <c:if test="${userType=='admin'}">	
+				
         	        <li class="nav-item">
 		                <a href="/dashboard" class="nav-link">
 		                  <i class="far fa-window-restore nav-icon"></i>
@@ -164,7 +169,7 @@
 		                  <p style="color:white;">Home</p>
 		                </a>
 		              </li>
-		              
+		           </c:if>
 		               
 		              
 		               <li class="nav-item">
@@ -185,18 +190,22 @@
 		                  <p style="color:white;">User Account</p>
 		                </a>
 		              </li>
-		               <li class="nav-item">
-		                <a href="/orderHistory" class="nav-link">
-		                  <i class="fa fa-history nav-icon"></i>
-		                  <p style="color:white;">Order History</p>
-		                </a>
-		              </li>
-		              <li class="nav-item">
-		                <a href="/cart" class="nav-link">
-		                  <i class="fa fa-shopping-cart nav-icon"></i>
-		                  <p style="color:white;">Cart</p>
-		                </a>
-		              </li>
+		              
+		            <c:if test="${userType=='user'}">
+				
+			               <li class="nav-item">
+			                <a href="/orderHistory" class="nav-link">
+			                  <i class="fa fa-history nav-icon"></i>
+			                  <p style="color:white;">Order History</p>
+			                </a>
+			              </li>
+			              <li class="nav-item">
+			                <a href="/cart" class="nav-link">
+			                  <i class="fa fa-shopping-cart nav-icon"></i>
+			                  <p style="color:white;">Cart</p>
+			                </a>
+			              </li>
+		             </c:if>
 		              <li class="nav-item">
 		                <a href="/logout" class="nav-link">
 		                  <i class="fa fa-sign-out  nav-icon"></i>

@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -54,6 +55,20 @@ public class CartController {
 		try {
 			User u=(User)session.getAttribute("user");
 			return service.deleteCart(menu_id,u.getId());
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return false;
+		}
+		
+	}
+	
+	@GetMapping("/payment")
+	public @ResponseBody boolean payment() {
+		
+		try {
+		
+			return service.paymentCart();
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();

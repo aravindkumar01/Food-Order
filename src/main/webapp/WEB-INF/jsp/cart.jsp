@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <!DOCTYPE html>
 <html>
 <head>
@@ -17,6 +19,8 @@
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  
+  <link rel="stylesheet" href="plugins/toastr/toastr.min.css">
 </head>
 <body class="hold-transition sidebar-mini">
 <!-- Site wrapper -->
@@ -47,38 +51,28 @@
     <!-- Main content -->
     <section class="content">
 
+  <c:if test="${not empty lists}">
+  <c:forEach items="${lists}" var="cart">
+	        
       <!-- Default box -->
       <div class="card">
-       <!--  <div class="card-header">
-          <h3 class="card-title">Title</h3>
-
-          <div class="card-tools">
-            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-              <i class="fas fa-minus"></i></button>
-            <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
-              <i class="fas fa-times"></i></button>
-          </div>
-        </div> -->
-        
-        
-        
         <div class="card-body">
           
            <div class="row">
            		<div class="col-sm-3">
            		
            			<div class="" style="margin-top:5px;">
-           					 <img style="height: 129px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg/1200px-Good_Food_Display_-_NCI_Visuals_Online.jpg" alt="">           			
+           					 <img style="height: 129px;" src="${cart.path}" alt="">           			
            			</div>
            		
            		</div>
            		<div class="col-sm-1"></div>
            		<div class="col-sm-3">
-           			<h5 style="margin-top: 39px;">Wedding light</h5>
+           			<h5 style="margin-top: 39px;">${cart.title}</h5>
            		</div>
-           		<div class="col-sm-1"></div>
+           		<div class="col-sm-1" style="margin-top: 39px;"></div>
            		<div class="col-sm-2">
-           			<h3 style="margin-top: 31px;"><i class="fa fa-inr col-sm-2" aria-hidden="true"></i>1200</h3>
+           			<h3 style="margin-top: 31px;"><i class="fa fa-inr col-sm-2" aria-hidden="true"></i>${cart.cost}</h3>
            		</div>
            		<div class="col-sm-2">
            		
@@ -88,7 +82,7 @@
 					</div>
 					<div class="row-sm-1"></div><br>
 					<div class="row-sm-3">
-						<button type="button" class="btn btn-danger">REMOVE</button>
+						<button type="button" class="btn btn-danger" onClick="removeCart(${cart.id})">REMOVE</button>
 					</div>
            		
            		</div>
@@ -96,11 +90,22 @@
            </div>
         </div>
         <!-- /.card-body -->
-      
-      
-      
-      
       </div>
+      
+     </c:forEach>
+     </c:if>
+     
+     	<div class="row">
+     		<div class="col-sm-10"></div>
+     		<div class="col-sm-2">
+     				<a href="/payment"  class="btn btn-danger btn-lg"> Payment</a>
+     		</div>
+     	
+     	</div>
+      
+      	<br>
+      	<br>
+      	<br>
       <!-- /.card -->
 
     </section>
@@ -127,6 +132,7 @@
 <script src="dist/js/demo.js"></script>
 
 
+<script src="plugins/toastr/toastr.min.js"></script>
 <style>
 
 .card-content {
@@ -213,6 +219,40 @@ $(document).ready(function(){
 	  });
 	
 });
+
+function removeCart(id){
+
+	  $.ajax({
+	      type: "DELETE",	     
+	      url: "/cart/delete/"+id,	   
+	     // data:{cart_id:id}, 
+	      success :function(result) {
+	    	 if(result){
+	    		 	alertMsg("Item remove");
+					window.reload();
+			    }else{
+			    	 errorToast("Unable to remove");
+				    }
+	     },
+       error: function(e){    
+    	   errorToast("Unable to remove");      	   
+    	  console.log(e)
+    	   
+    	  }
+	  });
+	
+}
+
+
+function alertMsg(msg){
+	
+	 toastr.success(msg);
+}
+
+function errorToast(msg){
+
+toastr.error(msg);
+}
 </script>
 </body>
 </html>

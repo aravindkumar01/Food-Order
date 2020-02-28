@@ -7,7 +7,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 3 | Blank Page</title>
+  <title>Tasty Buds</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -19,6 +19,9 @@
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  
+  <link rel="stylesheet" href="plugins/toastr/toastr.min.css">
+  
 </head>
 <body class="hold-transition sidebar-mini">
 <!-- Site wrapper -->
@@ -34,12 +37,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Blank Page</h1>
+            <h1>Checkout</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Blank Page</li>
+              <li class="breadcrumb-item active">Payment</li>
             </ol>
           </div>
         </div>
@@ -52,22 +55,58 @@
       <!-- Default box -->
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title">Title</h3>
-
-          <div class="card-tools">
-            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-              <i class="fas fa-minus"></i></button>
-            <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
-              <i class="fas fa-times"></i></button>
-          </div>
+          <h3 class="card-title">Title</h3> 
         </div>
         <div class="card-body">
-          Start creating your amazing application!
+         	
+         	
+         	<div class="row">
+        		
+         		<div class="col-sm-5">
+         		
+         			<c:set var="total" value="${0}"/>
+         				
+         			<div class="card" style="width: 18rem;">
+					  <div class="card-body">
+							<div class="">
+					 	   	  <h5 style="color:#a11111; margin-top:1px;magin-left:6px;"><b>Order Summary</b></h5>
+					 	   	    <c:if test="${not empty lists}">
+  									<c:forEach items="${lists}" var="cart">
+											<div class="row">
+												<p class="col-sm-6">${cart.title}</p>
+												<p class="col-sm-1"></p>
+												<p class="col-sm-5"><i class="fa fa-inr col-sm-2" aria-hidden="true"></i>&nbsp;${cart.cost}</p>
+											</div>
+									 <c:set var="total" value="${total + cart.cost}"/>
+									 <c:set var="user_id" value="${cart.user_id}"/>
+									</c:forEach>
+								</c:if>
+							
+							</div>   
+							
+							<hr>
+							<div class="row">
+									<p class="col-sm-6">Total</p>
+									<p class="col-sm-1"></p>
+									<p class="col-sm-5"><i class="fa fa-inr col-sm-2" aria-hidden="true"></i>&nbsp;${total}</p>
+							</div>    
+					  </div>
+					</div>
+         		
+        
+              		<button type="button" class="btn btn-danger" onClick="pay(${user_id})" style="margin-left:120px;">&nbsp;&nbsp;&nbsp;PAY&nbsp;&nbsp;&nbsp;&nbsp;</button>
+         			
+         		</div>
+         		
+         	</div>
+         	
+         	
+         	
+         	
+         	
         </div>
         <!-- /.card-body -->
-        <div class="card-footer">
-          Footer
-        </div>
+        
         <!-- /.card-footer-->
       </div>
       <!-- /.card -->
@@ -77,13 +116,7 @@
   </div>
   <!-- /.content-wrapper -->
 
-  <footer class="main-footer">
-    <div class="float-right d-none d-sm-block">
-      <b>Version</b> 3.0.2
-    </div>
-    <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong> All rights
-    reserved.
-  </footer>
+ <jsp:include page="footer.jsp" />
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
@@ -103,6 +136,8 @@
 <script src="dist/js/demo.js"></script>
 
 
+<script src="plugins/toastr/toastr.min.js"></script>
+
 <script>
 $(document).ready(function(){
 	  $.ajax({
@@ -120,6 +155,54 @@ $(document).ready(function(){
 	  });
 	
 });
+
+
+function pay(user_id){
+
+	var card_number=$("#card_number").val();
+	var card_name=$("#card_name").val();
+	var card_date=$("#card_date").val();
+	var card_ccv=$("#card_ccv").val();
+	
+
+	if(card_number=="" || card_name=="" || card_date=="" || card_ccv==""){
+		errorToast("Fill all details");
+		return false;
+	}	
+
+	  $.ajax({
+	      type: "GET",	     
+	      url: "/cart/payment",	
+	      success :function(result) {
+	    		if(result){
+	    			alertMsg("Payment sucessfully done!")
+		    		}
+	    	
+	     },
+       error: function(e){   
+    	   errorToast("Unable to payment");       	   
+    	  console.log(e)
+    	   
+    	   	        }
+	  });
+	
+
+}
+
+
+
+
+
+function alertMsg(msg){
+	
+	 toastr.success(msg);
+}
+
+function errorToast(msg){
+
+toastr.error(msg);
+}
+
 </script>
 </body>
 </html>

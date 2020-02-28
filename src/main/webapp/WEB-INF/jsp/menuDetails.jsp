@@ -56,8 +56,9 @@
             <div class="col-lg-12 text-center my-2">
               
                 <h4 class="border-bottom border-dark p-2">Menu's&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-               		 <a href="/addMenu" class="btn btn-primary" >New&nbsp;&nbsp;&nbsp;<i class="fa fa-plus-circle  nav-icon"></i></a>
-		  
+            		<c:if test="${user eq 'admin'}"> 
+               			 <a href="/addMenu" class="btn btn-primary" >New&nbsp;&nbsp;&nbsp;<i class="fa fa-plus-circle  nav-icon"></i></a>
+		  			</c:if>
                </h4>
             </div>
          </div>

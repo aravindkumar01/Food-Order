@@ -16,6 +16,30 @@ public class ViewCart {
 	private long item_id;
 	
 	private long user_id;
+	
+	private String path;
+	
+	
+	private int quantity;
+	
+	
+	
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
 
 	public long getId() {
 		return id;

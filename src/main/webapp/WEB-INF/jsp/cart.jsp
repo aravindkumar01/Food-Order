@@ -62,7 +62,7 @@
            		<div class="col-sm-3">
            		
            			<div class="" style="margin-top:5px;">
-           					 <img style="height: 129px;" src="${cart.path}" alt="">           			
+           					 <img style="height: 129px;" src="/tasty/${cart.path}" alt="">           			
            			</div>
            		
            		</div>
@@ -98,7 +98,7 @@
      	<div class="row">
      		<div class="col-sm-10"></div>
      		<div class="col-sm-2">
-     				<a href="/payment"  class="btn btn-danger btn-lg"> Payment</a>
+     				<a href="/tasty/payment"  class="btn btn-danger btn-lg"> Payment</a>
      		</div>
      	
      	</div>
@@ -206,7 +206,7 @@
 $(document).ready(function(){
 	  $.ajax({
 	      type: "GET",	     
-	      url: "/login/menu",	    
+	      url: "/tasty/login/menu",	    
 	      success :function(result) {
 	    	  console.log(result);
 	    	  $(".nav-bar").append(result);
@@ -224,7 +224,7 @@ function removeCart(id){
 
 	  $.ajax({
 	      type: "DELETE",	     
-	      url: "/cart/delete/"+id,	   
+	      url: "/tasty/cart/delete/"+id,	   
 	     // data:{cart_id:id}, 
 	      success :function(result) {
 	    	 if(result){

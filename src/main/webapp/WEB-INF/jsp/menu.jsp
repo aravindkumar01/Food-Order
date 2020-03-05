@@ -2,7 +2,14 @@
     pageEncoding="ISO-8859-1"%>
     
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    <style>
     
+    .brand-image{   
+    	
+    max-height: 45px !important;
+    }
+    
+    </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -120,7 +127,7 @@
       </li> -->
       <li class="nav-item d-none d-sm-inline-block">
         
-        <a href="/logout" class="nav-link btn-default"><i class="fa fa-key   nav-icon"></i>&nbsp;&nbsp;Logout</a>
+       <!--  <a href="/tasty/logout" class="nav-link btn-default"><i class="fa fa-key   nav-icon"></i>&nbsp;&nbsp;Logout</a> -->
       </li>
     </ul>
   </nav>
@@ -129,12 +136,12 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color:#d87d7d;">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
-      <img src="dist/img/AdminLTELogo.png"
+    <a href="/tasty/packages" class="brand-link">
+      <img src="/tasty/images/whitelogo.png"
            alt="AdminLTE Logo"
-           class="brand-image img-circle elevation-3"
+           class="brand-image img-circle" 
            style="opacity: .8">
-      <span class="brand-text font-weight-light" style="color:white;font-style: oblique;" >Tasty Buds</span>
+      <span class="brand-text font-weight-light" style="color:white;font-style: oblique;" >&nbsp;&nbsp;</span>
     </a>
 
     <!-- Sidebar -->
@@ -158,13 +165,13 @@
                <c:if test="${userType=='admin'}">	
 				
         	        <li class="nav-item">
-		                <a href="/dashboard" class="nav-link">
+		                <a href="/tasty/dashboard" class="nav-link">
 		                  <i class="far fa-window-restore nav-icon"></i>
 		                  <p style="color:white;">Dashboard</p>
 		                </a>
 		              </li>
 		               <li class="nav-item">
-		                <a href="/home" class="nav-link">
+		                <a href="/tasty/home" class="nav-link">
 		                  <i class="fa fa-home nav-icon"></i>
 		                  <p style="color:white;">Home</p>
 		                </a>
@@ -173,19 +180,19 @@
 		               
 		              
 		               <li class="nav-item">
-		                <a href="/menuDetails" class="nav-link">
+		                <a href="/tasty/menuDetails" class="nav-link">
 		                  <i class="fa fa-book  nav-icon"></i>
 		                  <p style="color:white;">Menu</p>
 		                </a>
 		              </li>
 		               <li class="nav-item">
-		                <a href="/packages" class="nav-link">
+		                <a href="/tasty/packages" class="nav-link">
 		                  <i class="fa fa-window-maximize   nav-icon"></i>
 		                  <p style="color:white;">Packages</p>
 		                </a>
 		              </li>
 		               <li class="nav-item">
-		                <a href="/userAccount" class="nav-link">
+		                <a href="/tasty/userAccount" class="nav-link">
 		                  <i class="far fa-user-circle  nav-icon"></i>
 		                  <p style="color:white;">User Account</p>
 		                </a>
@@ -194,20 +201,20 @@
 		            <c:if test="${userType=='user'}">
 				
 			               <li class="nav-item">
-			                <a href="/orderHistory" class="nav-link">
+			                <a href="/tasty/orderHistory" class="nav-link">
 			                  <i class="fa fa-history nav-icon"></i>
 			                  <p style="color:white;">Order History</p>
 			                </a>
 			              </li>
 			              <li class="nav-item">
-			                <a href="/cart" class="nav-link">
+			                <a href="/tasty/cart" class="nav-link">
 			                  <i class="fa fa-shopping-cart nav-icon"></i>
 			                  <p style="color:white;">Cart</p>
 			                </a>
 			              </li>
 		             </c:if>
 		              <li class="nav-item">
-		                <a href="/logout" class="nav-link">
+		                <a href="/tasty/logout" class="nav-link">
 		                  <i class="fa fa-sign-out  nav-icon"></i>
 		                  <p style="color:white;">Logout</p>
 		                </a>

@@ -46,7 +46,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                 <form role="form" action="/package/add" enctype="multipart/form-data"  method="post"> 
+                 <form role="form" action="/tasty/package/add" enctype="multipart/form-data"  method="post"> 
                 
 				  <div class="form-group">
                     <label>Title</label>
@@ -66,8 +66,8 @@
                   <div class="form-group">
                     <label>Status</label>
                     <select class="form-control" id="status" name="status"  required="required">
-                        <option value="avalible">Avalible</option>
-                        <option value="unavalible">Un Avalible</option>
+                        <option value="available">Available</option>
+                        <option value="unavailable">Unavailable</option>
                     </select>
                   </div>
                  
@@ -137,7 +137,7 @@
 $(document).ready(function(){
 	  $.ajax({
 	      type: "GET",	     
-	      url: "/login/menu",	    
+	      url: "/tasty/login/menu",	    
 	      success :function(result) {
 	    	  console.log(result);
 	    	  $(".nav-bar").append(result);
@@ -187,7 +187,7 @@ function myFunction(){
 	      type: "POST",
 	      contentType : 'application/json; charset=utf-8',
 	      dataType : 'json',
-	      url: "/package/add",
+	      url: "/tasty/package/add",
 	      data:  JSON.stringify(menu),
 	      
 	      success :function(result) {

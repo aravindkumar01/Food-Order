@@ -11,6 +11,8 @@
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
+
+  <link rel="stylesheet" href="plugins/toastr/toastr.min.css">
   <!-- Font Awesome  https://bootsnipp.com/snippets/1dPDV-->
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
   <!-- Ionicons -->
@@ -54,7 +56,7 @@
             <div class="col-lg-12 text-center my-2">
               
                 <h4 class="border-bottom border-dark p-2">Menu Packages&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-               		 <a href="/addPackage" class="btn btn-primary" >New&nbsp;&nbsp;&nbsp;<i class="fa fa-plus-circle  nav-icon"></i></a>
+               		 <a href="/tasty/addPackage" class="btn btn-primary" >New&nbsp;&nbsp;&nbsp;<i class="fa fa-plus-circle  nav-icon"></i></a>
 		  
                </h4>
             </div>
@@ -85,11 +87,11 @@
               <c:forEach items="${lists}" var="menu">
 	              <div class="item col-md-3 ${menu.title}">
 			        	<c:if test="${user eq 'admin'}">      
-			              <p class="text-center"><i class="fa fa-trash" style="color:red;cursor: pointer;}" aria-hidden="true"></i></p>
+			              <p class="text-center"><i class="fa fa-trash" style="color:red;cursor: pointer;}" aria-hidden="true" onClick="deleteMenu(${menu.id},'${menu.title}')"></i></p>
 			         	</c:if>
 			          <div class="card-content">
 	                      <div class="card-img">  
-	                        <img src="/images/packages/${menu.title}.jpeg" alt="">
+	                        <img src="/tasty/images/packages/${menu.title}.jpeg" alt="">
 	                        <span><h4>${menu.status}</h4></span>
 	                        
 	                    </div>
@@ -100,7 +102,7 @@
 		                      	 
 		                       <div class="" style="background-color:#a11111;height:50px;">
 		                           <div class="" style="margin-top:10px;">
-		                           		<a href="/viewPackage?id=${menu.id}" style="color:white;"><b><br>View<br><br></b></a>
+		                           		<a href="/tasty/viewPackage?id=${menu.id}" style="color:white;"><b><br>View<br><br></b></a>
 		                           		
 		                           </div>
 		                           
@@ -146,6 +148,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.js"></script>
 
+<script src="plugins/toastr/toastr.min.js"></script>
 
 <style>
 
@@ -282,7 +285,7 @@ $('.portfolio-item').isotope({
 $(document).ready(function(){
 	  $.ajax({
 	      type: "GET",	     
-	      url: "/login/menu",	    
+	      url: "/tasty/login/menu",	    
 	      success :function(result) {
 	    	  //console.log(result);
 	    	  $(".nav-bar").append(result);
@@ -295,6 +298,50 @@ $(document).ready(function(){
 	  });
 	
 });
+
+
+function deleteMenu(id,cls){
+
+	
+
+	  $.ajax({
+	      type: "GET",	     
+	      url: "/tasty/package/delete",
+	      data:{
+		      id:id
+		      },
+	      success :function(result) {
+		      
+	    	  console.log(result);
+	    	  if(result){
+	    		  alertMsg("Deleted!");
+	    		  $("."+cls+"").remove();
+		    	 }else{
+
+		    		 alertMsg("Unable to Deleted!");	 
+			    }
+	      },
+       error: function(e){          	   
+    	  console.log(e)
+    	  errorToast("Unable to delete!");
+    	   
+    	   }
+	  });
+	
+
+	
+}
+
+
+function alertMsg(msg){
+	
+	 toastr.success(msg);
+}
+
+function errorToast(msg){
+
+toastr.error(msg);
+}
 
  
 </script>

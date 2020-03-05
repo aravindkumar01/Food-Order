@@ -65,9 +65,15 @@
          		<div class="col-sm-3 card">
          			<h5 style="color:#a11111; margin-top:19px;magin-left:6px;"><b>Payment Method</b></h5>
          			<br>
-         			<p>Credit Card</p>
-         			<p>Debit Card</p>
-         			<p>Cash on Delivery</p>
+         			  
+         			  <p> <input type="radio" id="male" name="gender" value="male">
+					  		<label style="">Credit Card</label></p>
+					  <p> <input type="radio" id="male" name="gender" value="male">
+					  		<label for="male">Debit Card</label></p>
+					  <p> <input type="radio" id="male" name="gender" value="male">
+					  		<label for="male">Cash on Delivery</label></	p>
+					  
+         			
          		
          	   </div>
          		
@@ -173,7 +179,7 @@
 $(document).ready(function(){
 	  $.ajax({
 	      type: "GET",	     
-	      url: "/login/menu",	    
+	      url: "/tasty/login/menu",	    
 	      success :function(result) {
 	    	  console.log(result);
 	    	  $(".nav-bar").append(result);
@@ -203,10 +209,11 @@ function pay(user_id){
 
 	  $.ajax({
 	      type: "GET",	     
-	      url: "/cart/payment",	
+	      url: "/tasty/cart/payment",	
 	      success :function(result) {
 	    		if(result){
-	    			alertMsg("Payment sucessfully done!")
+	    			alertMsg("Payment sucessfully done!");
+	    			location.reload();
 		    		}
 	    	
 	     },

@@ -70,14 +70,14 @@
 
 							<div class="col-sm-6">
 								<div class="card-img" style="margin-top: 20px;">
-									<img src="/images/packages/${title}.jpeg" alt=""> <span><h4>${status}</h4></span>
+									<img src="/tasty/images/packages/${title}.jpeg" alt=""> <span><h4>${status}</h4></span>
 
 								</div>
 								<br>
 								<div class="row">
 									<div class="col-sm-8">
 										<h3>
-											<b>${title}dafsjhhadsjh<b></b>
+											<b>${title}<b></b>
 										</h3>
 									</div>
 									<div class="col-xs-4">
@@ -282,7 +282,7 @@ section {
 		$(document).ready(function() {
 			$.ajax({
 				type : "GET",
-				url : "/login/menu",
+				url : "/tasty/login/menu",
 				success : function(result) {
 					console.log(result);
 					$(".nav-bar").append(result);
@@ -300,7 +300,7 @@ section {
 
 			 $.ajax({
 			      type: "POST",	     
-			      url: "/cart/add"	,
+			      url: "/tasty/cart/add"	,
 			      //data:  JSON.stringify(cart),  
 			      data:{
 			    	  item_type:"package",
@@ -310,7 +310,7 @@ section {
 			      success :function(result) {
 			    	  if(result){
 			    		  alertMsg("Cart added"); 
-			    		  window.location.href = '/cart';
+			    		  window.location.href = '/tasty/cart';
 						
 				    	 }
 			    	

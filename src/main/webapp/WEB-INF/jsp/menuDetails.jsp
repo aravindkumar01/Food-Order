@@ -57,7 +57,7 @@
               
                 <h4 class="border-bottom border-dark p-2">Menu's&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             		<c:if test="${user eq 'admin'}"> 
-               			 <a href="/addMenu" class="btn btn-primary" >New&nbsp;&nbsp;&nbsp;<i class="fa fa-plus-circle  nav-icon"></i></a>
+               			 <a href="/tasty/addMenu" class="btn btn-primary" >New&nbsp;&nbsp;&nbsp;<i class="fa fa-plus-circle  nav-icon"></i></a>
 		  			</c:if>
                </h4>
             </div>
@@ -83,11 +83,11 @@
 	              <div class="item col-md-3 ${menu.category}">
 			        	<c:if test="${user eq 'admin'}">   
 			        	<br>   
-			              <p class="text-center"><i class="fa fa-trash" style="color:red;cursor: pointer;}" aria-hidden="true"></i></p>
+			              <p class="text-center"><i class="fa fa-trash" style="color:red;cursor: pointer;}" aria-hidden="true" onClick="deleteMenu(${menu.id},'${menu.category}')"></i></p>
 			         	</c:if>
 			          <div class="card-content">
 	                      <div class="card-img">  
-	                        <img src="/images/menu/${menu.title}.jpeg" alt="">
+	                        <img src="/tasty/images/menu/${menu.title}.jpeg" alt="">
 	                        <span><h4>${menu.status}</h4></span>
 	                        
 	                    </div>
@@ -317,7 +317,7 @@ $('.portfolio-item').isotope({
 $(document).ready(function(){
 	  $.ajax({
 	      type: "GET",	     
-	      url: "/login/menu",	    
+	      url: "/tasty/login/menu",	    
 	      success :function(result) {
 	    	  //console.log(result);
 	    	  $(".nav-bar").append(result);
@@ -350,7 +350,7 @@ function saveMenu(type,id){
 
 	 $.ajax({
 	      type: "POST",	     
-	      url: "/cart/add"	,
+	      url: "/tasty/cart/add"	,
 	      //data:  JSON.stringify(cart),  
 	      data:{
 	    	  item_type:"menu",
@@ -387,7 +387,7 @@ function cancelMenu(type,id){
 
 	 $.ajax({
 	      type: "DELETE",	     
-	      url: "/cart/delete/"+id	,
+	      url: "/tasty/cart/delete/"+id	,
 	      //data:  JSON.stringify(cart),  
 	     
 	      success :function(result) {
@@ -416,7 +416,37 @@ function errorToast(msg){
 toastr.error(msg);
 }
 
- 
+
+
+
+function deleteMenu(id,cls){
+
+	
+
+	  $.ajax({
+	      type: "DELETE",	     
+	      url: "/tasty/menu/"+id,
+	       success :function(result) {
+		      
+	    	  console.log(result);
+	    	  if(result){
+	    		  alertMsg("Deleted!");
+	    		  $("."+cls+"").remove();
+		    	 }else{
+
+		    		 alertMsg("Unable to Deleted!");	 
+			    }
+	      },
+       error: function(e){          	   
+    	  console.log(e)
+    	  errorToast("Unable to delete!");
+    	   
+    	   }
+	  });
+	
+
+	
+}
 </script>
 <style>
 body{

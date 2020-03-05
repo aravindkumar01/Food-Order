@@ -11,14 +11,14 @@
 
 <body>
   <span>
-    <img src="register/tasty buds white.png" class="logo"></span>
+    <img src="/tasty/dist/img/AdminLTELogo.png" class="logo"></span>
 <div class="login-page">
   <div class="form" style ="position:relative; left:200px; top:124px;">
     <form>
       Username<input type="email" placeholder="username" id="email"/><br>
       Password<input type="password" placeholder="password" id="password"/><br>
       <button type="button" id="login-btn"><B>login</B></button>
-      <p class="message">Not registered? <a href="/register">Create an account</a></p>
+      <p class="message">Not registered? <a href="/tasty/register">Create an account</a></p>
     </form>
   </div>
 </div>
@@ -42,7 +42,7 @@ $(document).ready(function(){
 		      type: "GET",
 		      contentType : 'application/json; charset=utf-8',
 		      dataType : 'json',
-		      url: "/login",
+		      url: "/tasty/login",
 		      data: {
 		    	  username:$("#email").val(),
 		    	  password:$("#password").val()
@@ -58,7 +58,7 @@ $(document).ready(function(){
 		    		swal("Login sucessfully!")
 					.then((value) => {
 
-						window.location.href = '/packages'; 
+						window.location.href = '/tasty/packages'; 
 					});
 		    		
 		    		

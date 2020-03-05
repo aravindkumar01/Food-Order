@@ -23,6 +23,12 @@ public interface CartRepo extends JpaRepository<Cart, Long>{
 
 	@Query("select c from Cart c where c.user_id=:id and c.payment=:payment")
 	List<Cart> findCartUser(Long id,boolean payment);
+
+	
+	@Query("select c from Cart c where c.user_id=:id and c.payment=:payment order by c.updateDateTime")
+	List<Cart> orderHis(Long id,boolean payment);
+	
+	
 	
 	@Transactional
 	@Modifying

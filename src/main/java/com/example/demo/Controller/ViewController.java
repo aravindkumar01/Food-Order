@@ -1,7 +1,9 @@
 package com.example.demo.Controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -103,6 +105,60 @@ public class ViewController {
 		}
 		
 	}
+	
+	
+
+
+	
+	@RequestMapping("/orderHistory")
+	public ModelAndView orderHistory(ModelMap model,HttpSession session) {
+		
+		try {
+			User u=(User)session.getAttribute("user");
+			
+				if(u==null) {
+					
+					return new ModelAndView("login");
+				}
+
+
+			List<ViewCart> list=cartService.getOrder();
+			Map<String,List<ViewCart>> map=new HashMap<String, List<ViewCart>>();
+				
+				for(ViewCart s:list) {
+					if(map.containsKey(s.getDate())) {
+						List<ViewCart> cart=new ArrayList<ViewCart>();
+								cart=map.get(s.getDate());
+								cart.add(s);
+								map.put(s.getDate(), cart);
+								
+								System.out.println("----------------exit---"+map);
+					}else {
+						List<ViewCart> cart=new ArrayList<ViewCart>();
+						cart.add(s);
+						map.put(s.getDate(), cart);
+						System.out.println("--------------new------------"+map);
+					}
+					
+				}
+				
+			ModelAndView model1 = new ModelAndView("orderHistory");
+			model1.addObject("role", u.getRole());				
+			//model1.addObject("lists", list);
+			model1.addObject("lists", map);
+			//return new ModelAndView("packages");
+			return model1;
+
+		
+			//return "packages";
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return null;
+		}
+		
+	}
+	
 	
 	
 

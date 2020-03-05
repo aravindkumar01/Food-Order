@@ -39,6 +39,7 @@ public class CartController {
 				cart.setItem_type(item_type);
 				cart.setQuantity(quantity);
 				cart.setUser_id(u.getId());
+				cart.setPayment(false);
 			
 			return service.saveUser(cart);
 		} catch (Exception e) {

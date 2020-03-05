@@ -46,6 +46,7 @@ public class PackageController {
 			   
 			    String absolutePath = context.getRealPath("/images/packages/").toString();
 			
+			    System.out.println(absolutePath);
 			    	
 			    		
 			    
@@ -107,10 +108,11 @@ public class PackageController {
 	}
 	
 	
-	@DeleteMapping("/{id}")
-	public @ResponseBody boolean delete(@PathVariable("id") long id) {
+	@GetMapping("/delete")
+	public @ResponseBody boolean delete(@RequestParam("id") long id) {
 		
 		try {
+			System.out.println("----------------------id"+id);
 			return service.deleteById(id);
 		} catch (Exception e) {
 			e.printStackTrace();

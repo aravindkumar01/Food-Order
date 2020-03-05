@@ -23,7 +23,7 @@ body{
             Address<input type="text" id="address" name="address" placeholder="address"required><br>           	
             E-Mail<input type="text" id="email" placeholder="email address" name="email" required><br>
             <button type="button" onClick="saveUser()">create</button><br>
-            <p class="message">Already registered? <a href="/">Sign In</a></p>
+            <p class="message">Already registered? <a href="/tasty">Sign In</a></p>
           </form>
         </div>
 </div>
@@ -47,7 +47,7 @@ function saveUser(){
 	      type: "POST",
 	      contentType : 'application/json; charset=utf-8',
 	      dataType : 'json',
-	      url: "/user/add",
+	      url: "/tasty/user/add",
 	      data:  JSON.stringify(user),
 	      
 	      success :function(result) {
@@ -57,7 +57,7 @@ function saveUser(){
 	        	swal("Registered sucessfully! Now you can login!")
 					.then((value) => {
 
-			        	 window.location.href = '/'; 
+			        	 window.location.href = '/tasty'; 
 					});
 	        
 	         }else{

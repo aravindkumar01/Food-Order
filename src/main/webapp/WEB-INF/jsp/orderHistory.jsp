@@ -61,16 +61,33 @@
          	
          	
          	<div class="row">
+         	
+         	<%-- 	<p>asd${lists}</p>
+         		<p>role${role}</p> --%>
         		
          		<div class="col-sm-5">
          		
-         			<c:set var="total" value="${0}"/>
+         			
          				
          			<div class="card" style="width: 18rem;">
 					  <div class="card-body">
 							<div class="">
+						
 					 	   	  <h5 style="color:#a11111; margin-top:1px;magin-left:6px;"><b>Order Summary</b></h5>
-					 	   	    <c:if test="${not empty lists}">
+					 	   	  
+					 	   	  <c:forEach var="entry" items="${lists}">
+					 	   	    <c:set var="total" value="${0}"/>
+								 <c:forEach items="${entry.value}" var="cart">
+											<div class="row">
+												<p class="col-sm-6">${cart.title}</p>
+												<p class="col-sm-1"></p>
+												<p class="col-sm-5"><i class="fa fa-inr col-sm-2" aria-hidden="true"></i>&nbsp;${cart.cost}</p>
+											</div>
+									 <c:set var="total" value="${total + cart.cost}"/>
+									 <c:set var="user_id" value="${cart.user_id}"/>
+								</c:forEach></c:forEach>
+
+					 	   	    <%-- <c:if test="${not empty lists}">
   									<c:forEach items="${lists}" var="cart">
 											<div class="row">
 												<p class="col-sm-6">${cart.title}</p>
@@ -80,7 +97,7 @@
 									 <c:set var="total" value="${total + cart.cost}"/>
 									 <c:set var="user_id" value="${cart.user_id}"/>
 									</c:forEach>
-								</c:if>
+								</c:if> --%>
 							
 							</div>   
 							
@@ -142,7 +159,7 @@
 $(document).ready(function(){
 	  $.ajax({
 	      type: "GET",	     
-	      url: "/login/menu",	    
+	      url: "/tasty/login/menu",	    
 	      success :function(result) {
 	    	  console.log(result);
 	    	  $(".nav-bar").append(result);
@@ -172,7 +189,7 @@ function pay(user_id){
 
 	  $.ajax({
 	      type: "GET",	     
-	      url: "/cart/payment",	
+	      url: "/tasty/cart/payment",	
 	      success :function(result) {
 	    		if(result){
 	    			alertMsg("Payment sucessfully done!")

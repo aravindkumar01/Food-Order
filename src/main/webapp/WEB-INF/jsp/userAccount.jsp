@@ -181,7 +181,7 @@ $(document).ready(function(){
 	
 	  $.ajax({
 	      type: "GET",	     
-	      url: "/login/menu",	    
+	      url: "/tasty/login/menu",	    
 	      success :function(result) {
 	    	  console.log(result);
 	    	  $(".nav-bar").append(result);
@@ -212,7 +212,7 @@ function saveUser(){
 	      type: "PUT",
 	      contentType : 'application/json; charset=utf-8',
 	      dataType : 'json',
-	      url: "/user/update",
+	      url: "/tasty/user/update",
 	      data:  JSON.stringify(user),
 	      
 	      success :function(result) {
